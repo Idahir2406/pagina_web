@@ -1,0 +1,29 @@
+.li {
+  display: flex;
+  margin-top: 12px;
+  text-align: center;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.wishItems{
+  scale: 0.7;
+  background-color: #F8A5C1;
+  border-radius: 50%;
+  width: 20px;
+  position: absolute;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  user-select: none;
+}
+/* .wishItems{
+  background-color: #F8A5C1;
+  border-radius: 50%;
+  width: 20px;
+  position: relative;
+  top: -12px;
+  right: 30px;
+  user-select: none;
+} */

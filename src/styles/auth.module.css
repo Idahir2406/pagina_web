@@ -1,0 +1,42 @@
+
+.titulo{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    color: #e6094e;
+}
+
+.terms{
+    font-size: 0.7rem;
+    color: #666;
+    text-align: end;
+}
+
+.button_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    height: 10%;
+    margin: 1em 0 0 0;
+}
+
+.rightContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 100%;
+    margin-bottom: 20px;
+}
+
+.a{
+  font-size: 12px;
+  text-decoration: none;
+  color: #77b3f6;
+}
+
+.a:hover{
+  text-decoration: underline;
+}
+

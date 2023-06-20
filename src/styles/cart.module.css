@@ -1,0 +1,83 @@
+.sections {
+  display: grid;
+  grid-template-columns: 3fr 1.5fr;
+}
+
+.productsCardContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 20px;
+  transition: all 0.3s ease;
+  gap: 20px;
+}
+
+.cartSummary {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 20px;
+  transition: all 0.3s ease;
+}
+
+.cardTitle {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.productsCardContainer h2 {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.productCard {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.imageContainer {
+  display: flex;
+  place-content: center;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quantityInput {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.deleteButton {
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.deleteButton:hover {
+  color: #979797;
+}
