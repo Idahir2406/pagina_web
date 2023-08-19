@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../../styles/option.module.css";
 import { BsChevronDown, BsChevronRight } from "react-icons/bs";
 import { useState } from "react";

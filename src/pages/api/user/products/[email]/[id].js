@@ -4,7 +4,7 @@ import User from "models/user";
 
 connectDB();
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const {
     method,
     body,
@@ -14,38 +14,36 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
-        const datos = {
-          product: id,
-          quantity: body.quantity,
-        };
-        const producto = await Product.findById(id);
-        if (!producto) {
+        const producto = req.body;
+        const productoEncontrado = await Product.findById(id);
+        if (!productoEncontrado) {
           return res.status(404).json({ error: "Product not found" });
         }
-        const usuarioEncontrado = await User.findOne({email:email})
-          .where("cart.product")
-          .equals(producto.id);
+        // si el producto ya esta en el carrito, sumar la cantidad
+        const usuarioEncontrado = await User.findOne({ email: email })
+          .where("cart._id")
+          .equals(producto._id);
         if (usuarioEncontrado) {
           const usuarioupt = await User.findOneAndUpdate(
             { email: email },
-            { $inc: { "cart.0.quantity": body.quantity } },
+            { $inc: { "cart.0.quantity": producto.quantity } },
             { new: true }
           );
           return res
             .status(200)
             .json({ usuarioupt, msg: `Producto sumado al carrito` });
         }
-        
+        //si no esta en el carrito, agregarlo
         await User.findOneAndUpdate(
           { email: email },
           {
             $push: {
-              cart: datos,
+              cart: producto,
             },
           },
           { new: true }
         );
-        return res.status(200).json({ msg: "Producto agregado al carrito" });
+        return res.status(200).json({ msg: "El producto se ha añadido al carrito" });
       } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -59,13 +57,14 @@ export default async (req, res) => {
         const producto = await Product.findById(id);
         if (!producto)
           return res.status(404).json({ error: "Product not found" });
-        const usuarioEncontrado = await User.findOne({email:email})
-          .where("cart.product")
+        const usuarioEncontrado = await User.findOne({ email: email })
+          .where("cart._id")
           .equals(producto.id);
+        
         if (!usuarioEncontrado)
           return res.status(404).json({ error: "Product not found in cart" });
         await User.findOneAndUpdate(
-          { email: email, "cart.product": producto.id },
+          { email: email, "cart._id": producto.id },
           { $set: { "cart.$.quantity": body.quantity } },
           { new: true }
         );
@@ -81,18 +80,21 @@ export default async (req, res) => {
       }
     case "DELETE":
       try {
+        
         const producto = await Product.findById(id);
+        
         if (!producto) {
           return res.status(404).json({ error: "Product not found" });
         }
-        const usuarioEncontrado = await User.findOne({email:email});
-        if (!usuarioEncontrado) {
-          return res.status(404).json({ error: "User not found" });
-        }
-        usuarioEncontrado.cart = usuarioEncontrado.cart.filter(
-          (item) => item.product.toString() !== id
-        );
-        await usuarioEncontrado.save();
+        const user = await User.findOneAndUpdate({ email: email }, {
+          $pull: {
+            cart: {
+              _id: producto.id
+            }
+          }
+        })
+        if(!user) return res.status(404).json({ error: "Product not found in cart" });
+
         return res.status(200).json("Producto eliminado del carrito");
       } catch (error) {
         console.log(error);
@@ -102,4 +104,4 @@ export default async (req, res) => {
         });
       }
   }
-};
+}

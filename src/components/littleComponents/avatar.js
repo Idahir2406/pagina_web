@@ -1,7 +1,6 @@
-import React from "react";
-import Image from "next/image";
-import {FaUser} from 'react-icons/fa'
-export default function Avatar({ src, size,noSrc }) {
+import { FaUser } from "react-icons/fa";
+import { Avatar as AvatarUi, AvatarGroup, AvatarIcon } from "@nextui-org/react";
+export default function Avatar({ src, size, noSrc, ...rest }) {
   let avatarSize = "w-8 h-8"; // Tamaño predeterminado
 
   switch (size) {
@@ -26,12 +25,13 @@ export default function Avatar({ src, size,noSrc }) {
       avatarSize = "w-8 h-8";
   }
 
-  if(noSrc)
-  return <FaUser className={`p-2 ring ring-gray-500  text-gray-500 rounded-full ${avatarSize}`}  size={128} />
+  if (noSrc)
+    return (
+      <FaUser
+        className={`p-2 ring ring-gray-500  text-gray-500 rounded-full ${avatarSize}`}
+        size={128}
+      />
+    );
 
-  return (
-    <div className={`rounded-full overflow-hidden ${avatarSize}`}>
-      <Image src={src} alt="User Avatar" width={128} height={128} />
-    </div>
-  );
+  return <AvatarUi src={src} {...rest} />;
 }

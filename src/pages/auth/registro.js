@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Input, Button, FormContainer, Form } from "components/form";
+import { FormContainer, Form } from "components/form";
 import { SocialContainer, Social } from "components/littleComponents/social";
 import { AiOutlineGooglePlus, AiOutlineTwitter } from "react-icons/ai";
 import { GrFacebookOption } from "react-icons/gr";
-import styles from "../../styles/auth.module.css";
+import { Input, Checkbox, Button } from "@nextui-org/react";
 import bcrypt from "bcryptjs";
 
 export default function Registro() {
@@ -30,7 +30,8 @@ export default function Registro() {
 
   const validate = () => {
     const errors = {};
-    if (!newUser.username) errors.username = "El nombre de usuario es necesario";
+    if (!newUser.username)
+      errors.username = "El nombre de usuario es necesario";
     if (!newUser.email) errors.email = "El correo electrónico es necesario";
     if (!newUser.password) errors.password = "La contraseña es necesaria";
     if (newUser.password.length < 6) {
@@ -79,55 +80,54 @@ export default function Registro() {
 
   return (
     <FormContainer>
-      <Form onSubmit={handleSubmit}>
-        <p className={styles.titulo}>Registrate</p>
+      <Form onSubmit={handleSubmit} cl>
+        <p>Registrate</p>
+
         <Input
-          placeholder="Nombre de usuario"
+          label="Nombre de usuario"
           onChange={handleChange}
-          error={errors.username}
+          errorMessage={errors.username}
           name="username"
         />
 
         <Input
           type="email"
-          placeholder="Email"
+          label="Email"
           name="email"
           onChange={handleChange}
-          error={errors.email}
+          errorMessage={errors.email}
         />
 
-        <Input
-          autoComplete="off"
-          type="password"
-          placeholder="Contraseña"
-          name="password"
-          onChange={handleChange}
-          error={errors.password}
-        />
+        <div className="flex flex-col md:flex-row gap-4">
+          <Input
+            autoComplete="off"
+            type="password"
+            label="Contraseña"
+            name="password"
+            onChange={handleChange}
+            errorMessage={errors.password}
+          />
 
-        <Input
-          autoComplete="off"
-          type="password"
-          placeholder="Confirmar contraseña"
-          name="password2"
-          onChange={handleChange}
-          error={errors.password2}
-        />
-        <div className={styles.rightContainer}>
-          <label className={styles.terms}>
-            <input type="checkbox" value="terms_checkbox" /> Acepta los{" "}
-            <a className={styles.a} href="">
-              términos y condiciones
-            </a>
-          </label>
+          <Input
+            autoComplete="off"
+            type="password"
+            label="Confirmar contraseña"
+            name="password2"
+            onChange={handleChange}
+            errorMessage={errors.password2}
+          />
         </div>
-        <div className={styles.button_container}>
-          <Button label="Continuar" />
-          <p className={styles.terms}>
-            ¿Ya tienes una cuenta?{" "}
-            <Link className={styles.a} href="./login">
-              Inicia sesión
-            </Link>
+        <div>
+          <Checkbox color="secondary" defaultSelected>
+            Acepta los términos y condiciones
+          </Checkbox>
+        </div>
+        <div>
+          <Button type="submit" className="bg-indigo-700 text-white">
+            Continuar
+          </Button>
+          <p>
+            ¿Ya tienes una cuenta? <Link href="./login">Inicia sesión</Link>
           </p>
         </div>
 
@@ -144,6 +144,7 @@ export default function Registro() {
             />
           </Social>
         </SocialContainer>
+
       </Form>
     </FormContainer>
   );

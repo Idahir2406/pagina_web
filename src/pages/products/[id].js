@@ -1,19 +1,20 @@
-import React, { useState, useContext, useEffect } from "react";
-import styles from "styles/productDetails.module.css";
+import { useState } from "react";
+
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import Incrementador from "../../components/littleComponents/incrementador";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import UserContext from "../../context/user/userContext";
+import { Button, Image } from "@nextui-org/react";
+import Popover from "../../components/buttons/Popover";
 
 export default function ProductDetails({ product, error }) {
+
   const { push } = useRouter();
-  const { data: status } = useSession();
+  const { data: session } = useSession();
   const [quantity, setQuantity] = useState(1);
   const [wish, setWish] = useState(false);
   const [advice, setAdvice] = useState("");
-
+  const router = useRouter();
   if (error && error.statusCode) {
     return (
       <h1>
@@ -21,28 +22,29 @@ export default function ProductDetails({ product, error }) {
       </h1>
     );
   }
-  
-  const increment = () => {
-    setQuantity(prevQuantity => prevQuantity + 1);
-  };
-
-  const decrement = () => {
-    if (quantity >= 1) {
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
 
   const handleAddCart = async () => {
-    if (status != "authenticated") return push("/auth/login");
+    if (!session) return push(`/auth/login?redirect=${router.asPath}`);
+    
+
     if (quantity === 0) return setAdvice("Debes seleccionar una cantidad");
+    const sendProducto = {
+      _id: product._id,
+      name: product.name,
+      category: product.category,
+      price: product.price,
+      description: product.description,
+      image: product.image,
+      quantity,
+    };
     const res = await fetch(
-      `http://localhost:3000/api/user/products/${user.email}/${product._id}`,
+      `http://localhost:3000/api/user/products/${session.user.email}/${product._id}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ quantity }),
+        body: JSON.stringify(sendProducto),
       }
     );
     if (res.status === 200) {
@@ -85,8 +87,8 @@ export default function ProductDetails({ product, error }) {
   };
 
   return (
-    <div className="flex flex-col md:flex md:flex-row md:justify-between md:w-full">
-      <div className="w-full sm:h-full h-[40vh] md:w-1/2 rounded-lg overflow-hidden mx-auto">
+    <div className="grid md:grid-cols-2">
+      <div className="mx-auto">
         <Image
           alt="productImage"
           className="w-full h-full object-center object-cover"
@@ -95,36 +97,31 @@ export default function ProductDetails({ product, error }) {
           height={300}
         />
       </div>
-      <div className="flex flex-col mt-3">
+      <div className="flex flex-col mt-3 justify-self-center md:justify-self-auto">
         <h3 className="text-2xl">{product.name}</h3>
         <p className="text-lg">${product.price}</p>
-        <p className={styles.desc}>{product.description}</p>
-        <Incrementador
-          quantity={quantity}
-          decrement={decrement}
-          increment={increment}
-        />
-        <div className={styles.buttonsContainer}>
-          <button
-            onClick={() => {
-              handleAddCart();
-            }}
-            className={styles.addCart}
+        <p>{product.description}</p>
+        <Incrementador onChange={(e) => setQuantity(e.target.value)} />
+        <div className=" flex gap-4">
+          <Popover
+            
+            message={advice}
+            onPress={handleAddCart}
           >
-            Añadir al carrito
-          </button>
-          <button
-          onMouseEnter={() => setWish(false)}
-          onMouseLeave={() => setWish(true)}
-            onClick={() => {
+            Añadir al Carrito
+          </Popover>
+          <Button
+            className="bg-transparent border border-red-300"
+            isIconOnly
+            onMouseEnter={() => setWish(false)}
+            onMouseLeave={() => setWish(true)}
+            onPress={() => {
               handleWishClick();
             }}
-            className={styles.addWish}
           >
-            {wish ? <AiFillHeart size={25} /> : <AiOutlineHeart size={25} />}
-          </button>
+            <AiOutlineHeart className="text-red-500" size={25} />
+          </Button>
         </div>
-        <p className={styles.advice}>{advice}</p>
         <div>
           <h2>Comentarios</h2>
         </div>
@@ -135,9 +132,6 @@ export default function ProductDetails({ product, error }) {
 
 export async function getServerSideProps({ query: { id } }) {
   try {
-
-    
-
     const res = await fetch(`http://localhost:3000/api/products/${id}`);
     if (res.status === 200) {
       const product = await res.json();

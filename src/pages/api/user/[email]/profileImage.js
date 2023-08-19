@@ -3,13 +3,13 @@ const fs = require("fs");
 const path = require("path");
 import sharp from "sharp";
 import User from "models/user";
-
+import app from "utils/firebase"
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-export default async function (req,res) {
+export default async function profileHandler (req,res) {
   const {method} = req;
   const {email} = req.query;
 

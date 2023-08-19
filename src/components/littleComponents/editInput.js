@@ -1,5 +1,3 @@
-import React from "react";
-
 export const EditInput = ({onChange,placeholder,name,className,type,maxLength}) => {
   return (
     <input

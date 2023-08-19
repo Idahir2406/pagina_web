@@ -1,4 +1,5 @@
-import {Schema,model,models, Types} from 'mongoose';
+import {Schema,model,models} from 'mongoose';
+
 
 const UserSchema=new Schema({
   username: {
@@ -36,6 +37,23 @@ const UserSchema=new Schema({
     type: Array,
   },
   adresses:{
+    default: [],
+    type: Array,
+  },
+  chats:{
+    default: [],
+    type: Array,
+  },
+  role:{
+    type: String,
+    default: 'user',
+  },
+  notifications:{
+    default: [],
+    type: Array,
+  },
+
+  clientOrders:{
     default: [],
     type: Array,
   }

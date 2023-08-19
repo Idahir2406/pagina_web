@@ -1,28 +1,46 @@
-import React, { useReducer } from "react";
+import { useState, useEffect } from "react";
 import UserContext from "./userContext";
-import UserReducer from "./userReducer";
+import { useSession } from "next-auth/react";
 
 const UserState = ({ children }) => {
-  const initialState = {
-    user: {},
+  const [Loading, setLoading] = useState(true);
+  const [user, setUser] = useState({});
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    getUser();
+  }, [session]);
+
+  const getUser = async () => {
+    if (!session) return;
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/user/${session.user.email}`
+      );
+      const data = await res.json();
+      setUser({
+        ...user,
+        ...data,
+      });
+    } catch (error) {
+      console.log(error);
+      return new Error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const [state, dispatch] = useReducer(UserReducer, initialState);
-
-  const getUser = async (id) => {
-    const res = await fetch(`http://localhost:3000/api/user/${id}`);
-    const data = await res.json();
-    dispatch({
-      type: "GET_USER",
-      payload: data,
-    })
+  const deleteUser = () => {
+    setUser(null);
   };
 
   return (
     <UserContext.Provider
       value={{
-        state,
+        user,
         getUser,
+        deleteUser,
+        Loading,
       }}
     >
       {children}

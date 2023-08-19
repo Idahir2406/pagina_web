@@ -1,6 +1,6 @@
 import { connectDB } from "utils/mongoose";
 import User from "models/user";
-
+import { User as normalUser } from "../../../services/constants";
 connectDB();
 export default async function handler(req, res) {
   const { method, body } = req;
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         if (userNick) return res.status(400).json({ username: "Este nombre de usuario ya está en uso" });
         const userEmail = await User.findOne({ email: body.email });
         if (userEmail) return res.status(400).json({ email: "Este correo ya está en uso en otra cuenta" });
-        const newUser = await User.create(body);
+        const newUser = await User.create({ ...body,role:normalUser});
         return res.status(201).json(newUser,{message:"User created"});
       } catch (error) {
         return res.status(400).json({ error: error.message });

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import {connect, connection, set} from 'mongoose';
 
 const conn = {
   isConnected: false
@@ -6,16 +6,21 @@ const conn = {
 
 export const connectDB = async () => {
   if (conn.isConnected) return;
-  const db = await mongoose.connect(process.env.MONGO_URI);
+  const db = await connect(process.env.MONGO_URI);
   conn.isConnected = db.connections[0].readyState;
 };
 
-mongoose.connection.on('connected', () => {
+
+connection.on('connected', () => {
   console.log('Connected to MongoDB');
 });
 
-mongoose.connection.on('error', (err) => {
+connection.on('error', (err) => {
   console.log('Error connecting to MongoDB', err);
 });
 
-export default mongoose;
+connection.on('disconnected', () => {
+  console.log('Disconnected from MongoDB');
+});
+
+set("strictQuery",false)

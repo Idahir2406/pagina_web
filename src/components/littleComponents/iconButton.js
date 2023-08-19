@@ -1,8 +1,7 @@
-import React from "react";
-export const IconButton = ({ children, size }) => {
+export const IconButton = ({ children, size,...rest }) => {
   return (
-    <div className="rounded-full p-3 active:text-violet-500 hover:bg-gray-100 transition-all">
-      {React.cloneElement(children, { size: size, className: "cursor-pointer" })}
+    <div {...rest} className="rounded-full p-3  dark:text-gray-200 dark:hover:bg-slate-600 hover:bg-gray-100 transition-all cursor-pointer">
+      {children}
     </div>
   );
 };

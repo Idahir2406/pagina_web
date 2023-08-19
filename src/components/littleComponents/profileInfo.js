@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const ProfileInfo = () => {
   return (
     <div className="flex flex-col bg-gray-100 rounded-md p-5 max-w-sm gap-1">

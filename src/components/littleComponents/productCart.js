@@ -1,53 +1,26 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Image from "next/image";
 import { Selector } from "./selector";
-import QuantityContext from "context/quantityContext";
 import Skeleton from "react-loading-skeleton";
-import io from 'socket.io-client';
-
-const socket = io('http://localhost:3001',{
-  transports: ['websocket', 'polling', 'flashsocket'],
-  cors:{
-    origin: 'http://localhost:3000',
-  }
-})
+import Link from "next/link";
 
 export default function ProductCart({
-  name,
-  redirect,
-  description,
-  price,
-  image,
-  id,
-  quantity,
-  email,
+  product,
+  addProduct,
   deleteProduct,
-  loading,// Prop para actualizar la cantidad en el carrito
+  loading,
+  // Prop para actualizar la cantidad en el carrito
 }) {
-
   const options = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const [selected, setSelected] = useState(quantity);
+  const [selected, setSelected] = useState(product.quantity);
 
-  const addProduct = async (email, id) => {
-    const res = await fetch(`http://localhost:3000/api/user/products/${email}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ quantity: selected }),
-    }).catch((err) => console.log(err));
-    if(res.status === 200){
-      socket.emit('mensaje', email);
-    }
-  };
-
-  useEffect(() => {
-    addProduct(email, id);
-  }, [selected]);
+  // useEffect(() => {
+  //   addProduct(selected,product.id);
+  // }, [selected]);
 
   return (
-    <div className="flex border-t w-10/12 items-center h-72 mb-4 gap-10" key={id}>
+    <div className="flex border-t w-10/12 items-center h-72 mb-4 gap-10" >
       <div className="w-48 h-52 rounded-md overflow-hidden">
         {loading ? (
           <Skeleton height={200} width={200} />
@@ -55,7 +28,7 @@ export default function ProductCart({
           <Image
             className="w-full h-full object-cover"
             alt="cartProductImage"
-            src={image}
+            src={product.image}
             width={200}
             height={200}
           />
@@ -71,17 +44,17 @@ export default function ProductCart({
             </>
           ) : (
             <>
-              <p className="text-md cursor-pointer" onClick={redirect}>
-                {name}
-              </p>
-              <p className="text-sm text-gray-500">{description}</p>
-              <p className="text-sm">${price}.00</p>
+              <Link className="text-md cursor-pointer" href={`/products/${product._id}`}>
+                {product.name}
+              </Link>
+              <p className="text-sm text-gray-500">{product.description}</p>
+              <p className="text-sm">${product.price}.00</p>
             </>
           )}
         </div>
         <Selector options={options} selected={selected} setSelected={setSelected} />
         <button
-          onClick={deleteProduct}
+          onClick={()=>deleteProduct(product._id)}
           type="button"
           className="text-gray-400 hover:text-gray-600"
         >

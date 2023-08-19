@@ -1,16 +1,23 @@
 import { signIn } from "next-auth/react";
-import { useState,useContext } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-import styles from "../../styles/auth.module.css";
+
 import Link from "next/link";
-import { Input, Button, FormContainer, Form } from "components/form";
+import { FormContainer, Form } from "components/form";
 import { SocialContainer, Social } from "components/littleComponents/social";
-import { FaGoogle,FaFacebook,FaTwitter } from "react-icons/fa";
-import emailValidator from 'email-validator';
+import { FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
+import emailValidator from "email-validator";
+import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
+import { SocialButton } from "../../components/littleComponents/social";
+import { Input, Button, Spinner } from "@nextui-org/react";
+import { useUser } from "hooks/useUser";
 
 export default function LoginPage() {
+  const { getUser } = useUser();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // [1
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -18,29 +25,31 @@ export default function LoginPage() {
 
   const validate = () => {
     const errors = {};
-  
+
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
-  
+
     if (!trimmedEmail) {
-      errors.email = 'El email es requerido';
+      errors.email = "El email es requerido";
     } else if (!emailValidator.validate(trimmedEmail)) {
-      errors.email = 'El email no es válido';
+      errors.email = "El email no es válido";
     }
-  
+
     if (!trimmedPassword) {
-      errors.password = 'La contraseña es requerida';
+      errors.password = "La contraseña es requerida";
     } else if (trimmedPassword.length < 8) {
-      errors.password = 'La contraseña debe tener al menos 8 caracteres';
+      errors.password = "La contraseña debe tener al menos 8 caracteres";
     }
-  
+
     return errors;
   };
-  
-  
 
   const handleGoogleLogin = async () => {
-    signIn("google", { callbackUrl: "http://localhost:3000/" });
+    if (router.query.redirect)
+      return await signIn("google", {
+        callbackUrl: `http://localhost:3000${router.query.redirect}`,
+      });
+    await signIn("google", { callbackUrl: `http://localhost:3000` });
   };
 
   const handleFacebookLogin = async () => {
@@ -52,85 +61,90 @@ export default function LoginPage() {
     event.preventDefault();
     const errores = validate();
     if (Object.keys(errores).length) return setErrors(errores);
-    const res = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: false,
-    });
-    if (!res.error) {
-      
+    setLoading(true);
+    try {
+      const res = await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+      });
+
+      if (!res.error) {
+        localStorage.setItem("user", JSON.stringify(res));
+        await getUser();
+        if (router.query.redirect)
+        router.push(`http://localhost:3000${router.query.redirect}`);
       router.push("/");
-    } else {
-      setErrors({ ...errors, password: "Invalid email or password" });
+      } else {
+        setErrors({ ...errors, password: "Email o contraseña invalidos" });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+      
     }
   };
 
   return (
-    <FormContainer>
-      <Form onSubmit={handleSubmit}>
-        <p className={styles.titulo}>Inicia sesión</p>
-        <Input
-          placeholder="Correo electrónico"
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        {errors.email && <p className={styles.error}>{errors.email}</p>}
-        <Input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          placeholder="Contraseña"
-        />
-        {errors.password && <p className={styles.error}>{errors.password}</p>}
-        <div className={styles.rightContainer}>
-          <Link className={styles.a} href="./login">
-            ¿Olvidaste tu contraseña?
-          </Link>
-        </div>
-        <div className={styles.button_container}>
-          <Button type="submit" label="Iniciar" />
-          <p className={styles.terms}>
-            ¿No tienes una cuenta?{" "}
-            <Link className={styles.a} href="./registro">
-              Regístrate
+    <section className="flex items-center justify-center h-[70vh]">
+      <form
+        className="rounded-md p-5 flex flex-col gap-3 justify-center bg-gray-50  dark:bg-slate-800 w-96"
+        onSubmit={handleSubmit}
+      >
+        <p className="text-2xl ">Inicia sesión</p>
+        <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
+            <Input
+              label="Email"
+              icon={<AiOutlineMail className="text-gray-600" size={25} />}
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              errorMessage={errors.email}
+            />
+
+            <Input
+              label="Contraseña"
+              icon={<AiOutlineLock className="text-gray-600" size={25} />}
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              errorMessage={errors.password}
+            />
+          </div>
+          <div className="flex flex-col md:flex-row gap-4">
+            <Link className="text-sm hover:underline" href="./login">
+              ¿Olvidaste tu contraseña?
             </Link>
-          </p>
+            <p className="text-sm flex flex-col">
+              ¿No tienes una cuenta?
+              <Link
+                className="hover:underline md:text-end text-violet-400"
+                href="./registro"
+              >
+                Regístrate
+              </Link>
+            </p>
+          </div>
         </div>
-        <SocialContainer>
-          <Social>
-          <FaTwitter
-              style={{
-                color: "#feffff",
-                cursor: "pointer",
-              }}
-              size={30}
-            />
-            <FaGoogle
-              onClick={handleGoogleLogin}
-              style={{
-                color: "#feffff",
-                cursor: "pointer",
-              }}
-              size={30}
-            />
-            <FaFacebook
-              onClick={handleFacebookLogin}
-              style={{
-                color: "#feffff",
-                cursor: "pointer",
-              }}
-              size={30}
-            />
-          </Social>
-        </SocialContainer>
-      </Form>
-    </FormContainer>
+
+        <Button className="bg-indigo-700 hover:bg-indigo-800 text-white" type="submit">
+          {loading ? <Spinner /> : "Iniciar sesión"}
+        </Button>
+        <Button
+          onPress={handleGoogleLogin}
+          className="bg-transparent ring-indigo-700 ring-1 hover:ring-2  transition"
+        >
+          Google
+        </Button>
+      </form>
+    </section>
   );
 }

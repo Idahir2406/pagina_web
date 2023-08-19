@@ -1,8 +1,8 @@
-import React, { Fragment,useContext,useState } from "react";
+import { Fragment,useContext,useState,Suspense,lazy } from "react";
 import { SearchContext } from "../context/searchContext";
 import { Listbox } from "@headlessui/react";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { TransitionComponent } from "./littleComponents/transitionComponent";
+
 export const Searchbox = () => {
   const { setSearchTerm } = useContext(SearchContext);
   const [isFocused, setIsFocused] = useState(false);
@@ -36,7 +36,7 @@ export const Searchbox = () => {
 
   return (
     <div className={`hidden md:flex p-1 transition justify-center items-center border ${
-      !isFocused ? 'bg-gray-100' : ''
+      !isFocused ? 'bg-gray-100 dark:bg-slate-700' : ''
     } border-gray-1 rounded-lg`}>
       <Listbox
         as="div"
@@ -46,7 +46,7 @@ export const Searchbox = () => {
       >
         {({ open }) => (
           <>
-            <Listbox.Button className="flex items-center gap-2 bg-violet-600 text-white p-2 rounded-lg transition-all">
+            <Listbox.Button className="flex items-center gap-2 bg-violet-600 text-white dark:text-gray-200 p-2 rounded-lg transition-all">
               {selectedCategorie.name}
               <BsChevronCompactDown
                 className={`transition-all ${open && "rotate-180"}`}
@@ -54,20 +54,12 @@ export const Searchbox = () => {
               />
             </Listbox.Button>
 
-            <TransitionComponent
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Listbox.Options className="absolute w-56 mt-2 origin-top-right bg-white divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+
+              <Listbox.Options className="absolute w-56 mt-2 origin-top-right dark:bg-slate-800 bg-white divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 {categories.map((categorie) => (
                   <div key={categorie.id} className="px-1 py-1">
                     <Listbox.Option
-                      className="bg-white text-black hover:bg-violet-500 hover:text-white
+                      className="bg-white dark:text-gray-200 text-black hover:bg-violet-500 hover:dark:bg-slate-700 dark:bg-slate-800 hover:text-white
                    group flex rounded-md cursor-pointer items-center w-full p-2 text-sm"
                       key={categorie.link}
                       value={categorie}
@@ -77,7 +69,7 @@ export const Searchbox = () => {
                   </div>
                 ))}
               </Listbox.Options>
-            </TransitionComponent>
+
           </>
         )}
       </Listbox>
@@ -87,7 +79,7 @@ export const Searchbox = () => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         onChange={handleChange}
-        className="ml-3 outline-none border-none bg-transparent focus:text-gray-700 text-gray-500 placeholder-gray-500"
+        className="ml-3 outline-none border-none bg-transparent focus:text-gray-700 dark:text-gray-200 text-gray-500 placeholder-gray-500"
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import User from "models/user";
 import Product from "models/product";
-export default async function profileHandler(req, res) {
+export default async function cartHandler(req, res) {
   const email = req.query.email;
   const { method } = req;
   const { productId, quantity } = req.body;
@@ -47,6 +47,20 @@ export default async function profileHandler(req, res) {
           error: error.message,
           message: "Error al actualizar la cantidad en el carrito",
         });
+      }
+    case "DELETE":
+      try {
+        const { cart } = await User.findOne({ email: email }).select("cart");
+
+        if (!cart || cart.length === 0)
+          return res
+            .status(404)
+            .json({ error: "No hay productos en el carrito" });
+        await User.findOneAndUpdate({ email: email }, { $set: { cart: [] } });
+        return res.status(200).json({ msg: "Carrito vaciado" });
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: error.message });
       }
   }
 }
