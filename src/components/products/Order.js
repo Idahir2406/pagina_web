@@ -6,7 +6,7 @@ export const Order = ({ pedido, index }) => {
     <div className="flex flex-col">
       <div className="flex items-center gap-6 py-6 ">
         <h2 className="text-2xl font-bold ">Pedido #{index + 1}</h2>
-        <Link href="#" className="text-indigo-700 hover:underline text-sm">
+        <Link href="#" className="text-indigo-700 dark:text-indigo-500 hover:underline text-sm">
           Ver factura {"->"}{" "}
         </Link>
       </div>

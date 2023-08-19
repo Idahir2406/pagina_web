@@ -7,7 +7,7 @@ export const Tooltip = ({ children, ...rest }) => {
       delay={500}
       
     >
-      <Button isIconOnly>{children}</Button>
+      <Button variant="bordered" isIconOnly>{children}</Button>
     </Tool>
   );
 };

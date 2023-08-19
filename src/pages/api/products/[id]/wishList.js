@@ -5,10 +5,13 @@ import { verify } from "jsonwebtoken";
 
 connectDB();
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const token = req.cookies.MyToken;
-  const { method,query: { id } } = req;
-  
+  const {
+    method,
+    query: { id },
+  } = req;
+
   switch (method) {
     case "POST":
       try {
@@ -30,12 +33,10 @@ export default async (req, res) => {
         );
         return res.status(200).json(usuarioupt);
       } catch (error) {
-        return res
-          .status(500)
-          .json({
-            error: error.message,
-            message: "Error al agregar al carrito",
-          });
+        return res.status(500).json({
+          error: error.message,
+          message: "Error al agregar al carrito",
+        });
       }
 
     case "DELETE":
@@ -50,4 +51,4 @@ export default async (req, res) => {
         return res.status(500).json({ error: error.message });
       }
   }
-};
+}

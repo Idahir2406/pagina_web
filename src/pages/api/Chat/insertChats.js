@@ -1,5 +1,4 @@
 import User from "models/user";
-import Chat from "models/chatBot";
 import { getServerSession } from "next-auth";
 import { connectDB } from "utils/mongoose";
 import { authOptions } from "../auth/[...nextauth]";

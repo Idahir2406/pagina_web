@@ -1,23 +1,22 @@
 import Head from "next/head";
-import { useState, useRef, useContext } from "react";
+import { useState } from "react";
 import ProfileLayout from "components/profileLayout";
 import { RxPencil2 } from "react-icons/rx";
-import { AiOutlineInfo, AiOutlinePlus } from "react-icons/ai";
-import { Image,Button, Input } from "@nextui-org/react";
+import { AiOutlineInfo } from "react-icons/ai";
+import { Image, Button, Input } from "@nextui-org/react";
 import { BsCameraFill } from "react-icons/bs";
-import { PhoneInput } from "../../../../../components/form";
-import UserContext from "../../../../../context/user/userContext";
-import { Tooltip } from "../../../../../components/buttons/tooltip";
-import { InputFile } from "../../../../../components/littleComponents/InputFile";
+
+import { useUser } from "hooks/useUser";
+import { Tooltip } from "components/buttons/tooltip";
+import { InputFile } from "components/littleComponents/InputFile";
 export default function Profile() {
   const [change, setChange] = useState(false);
-  const [hover, setHover] = useState(false);
   const [userInfo, setUserInfo] = useState({
     username: "",
     phoneNumber: "",
     adresses: [],
   });
-  const { user, loading, getUser } = useContext(UserContext);
+  const { user, loading, getUser } = useUser();
 
   const handleInputChange = (e) => {
     setUserInfo({
@@ -53,15 +52,7 @@ export default function Profile() {
     });
     const data = await res.json();
   };
-  const fileInputRef = useRef(null);
 
-  const handleOpenFileMenu = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  
   const handleFileSelected = async (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
@@ -110,98 +101,116 @@ export default function Profile() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <section className="bg-white dark:bg-slate-800 p-4 grid grid-cols-1 justify-items-center md:justify-items-stretch md:grid-cols-2 rounded-md gap-4  ">
-        <article className="flex w-full md:w-auto relative max-w-md ">
-          <picture className="relative mx-auto md:mx-0 flex items-center justify-center">
-            {/* <Image
-              isBlurred
-              loading="lazy"
-              src={user.image}
-              alt="profile Image"
-              width={250}
-              isZoomed
-              className="cursor-pointer"
-              onMouseEnter={() => setHover(true)}
-              onClick={handleOpenFileMenu}
-            /> */}
+      <section className="bg-white dark:bg-slate-800 p-4 grid grid-cols-1 justify-items-center md:justify-items-stretch md:grid-cols-12 rounded-md gap-4  max-w-7xl mx-auto ">
+        <article className="flex w-full md:w-auto col-span-6">
+          <picture className="mx-auto md:mx-0 flex items-center justify-center">
             {user.image ? (
-          <InputFile
-            name="image"
-            onChange={handleFileSelected}
-            accept=".jpg, .jpeg, .png"
-            className="cursor-pointer"
-          >
-            <Image
-              className="max-h-44"
-              alt="product"
-              src={user.image}
-            />
-          </InputFile>
-        ) : (
-          <div className="flex flex-col items-center">
-            <InputFile
-              name="image"
-              onChange={handleFileSelected}
-              accept=".jpg, .jpeg, .png"
-              className={`h-36 w-36  rounded-md cursor-pointer flex items-center justify-center relative  transition-colors text-gray-400 `}
-            >
-              {" "}
-              <BsCameraFill size={90} />
-            </InputFile>
-  
-          </div>
-        )}
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileSelected}
-            />
+              <InputFile
+                name="image"
+                onChange={handleFileSelected}
+                accept=".jpg, .jpeg, .png"
+                className="cursor-pointer"
+              >
+                <Image className="max-h-44" alt="product" src={user.image} />
+              </InputFile>
+            ) : (
+              <div className="flex flex-col items-center">
+                <InputFile
+                  name="image"
+                  onChange={handleFileSelected}
+                  accept=".jpg, .jpeg, .png"
+                  className={`h-36 w-36  rounded-md cursor-pointer flex items-center justify-center relative  transition-colors text-gray-400 `}
+                >
+                  {" "}
+                  <BsCameraFill size={90} />
+                </InputFile>
+              </div>
+            )}
           </picture>
         </article>
-        <article className="flex w-full md:w-auto flex-col dark:bg-slate-700 bg-gray-100 rounded-md p-5 md:max-w-md gap-1 ">
-          <div className={`flex justify-between ${!change && "w-52"}`}>
+        <article className="flex w-full md:w-auto flex-col dark:bg-slate-700 bg-gray-100 rounded-md p-5 gap-1 col-span-6">
+          <div className={`flex flex-col w-full`}>
             {change ? (
-              <Input
-                label="Nombre de usuario"
-                type="text"
-                name="username"
-                onChange={handleInputChange}
-              />
+              <div className="flex flex-col w-full gap-4">
+                <div className="flex items-center justify-between gap-4">
+                  <Input
+                    label="Nombre de usuario"
+                    type="text"
+                    name="username"
+                    classNames={{
+                      inputWrapper: [
+                        "bg-white",
+                        "dark:bg-gray-800",
+                        "dark:hover:bg-gray-700",
+                      ],
+                    }}
+                    onChange={handleInputChange}
+                  />
+                  <Button
+                    isIconOnly
+                    color="secondary"
+                    onPress={() => setChange(!change)}
+                    variant="bordered"
+                  >
+                    <RxPencil2 size={20} />
+                  </Button>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <Input
+                    disabled
+                    type="email"
+                    label="Email"
+                    value={user.email}
+                    classNames={{
+                      inputWrapper: ["bg-white", "dark:bg-gray-800"],
+                    }}
+                  />
+                  <Tooltip
+                    content="No se puede modificar el email"
+                    placement="right"
+                  >
+                    <AiOutlineInfo size={20} />
+                  </Tooltip>
+                </div>
+                <Input
+                  classNames={{
+                    inputWrapper: [
+                      "bg-white",
+                      "dark:bg-gray-800",
+                      "dark:hover:bg-gray-700",
+                    ],
+                  }}
+                  type="text"
+                  label="Numero de teléfono"
+                />
+              </div>
             ) : (
-              <h1 className="text-2xl font-semibold">{user.username}</h1>
+              <>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-medium">{user.username}</h2>
+                  <Button
+                    isIconOnly
+                    color="secondary"
+                    onPress={() => setChange(!change)}
+                    variant="bordered"
+                  >
+                    <RxPencil2 size={20} />
+                  </Button>
+                </div>
+                <div className="flex mt-4 items-center justify-between">
+                  <p className="text-default-500 dark:text-gray-300">
+                    {user.email}
+                  </p>
+                </div>
+                <label className="text-gray-400 mt-1">Teléfono:</label>
+
+                <p className="text-default-500 dark:text-gray-300">
+                  {user.phoneNumber}
+                </p>
+              </>
             )}
-            <button
-              onClick={() => setChange(!change)}
-              className="text-gray-500 hover:text-gray-700 "
-            >
-              <RxPencil2 size={20} />
-            </button>
           </div>
           <div className="flex gap-4 items-center  text-gray-500">
-            {change ? (
-              <Input
-                disabled
-                type="email"
-                label="Email"
-                defaultValue="junior@nextui.org"
-                className="max-w-xs"
-              />
-            ) : (
-              <p>{user.email}</p>
-            )}
-            <Tooltip
-              showArrow
-              classNames={{
-                base: "py-2 px-4  text-black ",
-                arrow: "bg-white dark:bg-white",
-              }}
-              content="No se puede modificar el email"
-              placement="right"
-            >
-              <AiOutlineInfo size={20} />
-            </Tooltip>
             {/* <div className="group relative">
                   <AiOutlineInfo
                     className="border rounded-full border-gray-500 cursor-pointer hover:bg-gray-300 transition duration-300 ease-in-out "
@@ -212,14 +221,8 @@ export default function Profile() {
                   </span>
                 </div> */}
           </div>
-          <label className="text-gray-400 mt-1">Teléfono:</label>
-          {change ? (
-            <PhoneInput />
-          ) : (
-            <p className="text-gray-500">{user.phoneNumber}</p>
-          )}
 
-          <button className="text-gray-500 hover:text-gray-700 text-start hover:underline my-2">
+          <button className="text-default-500 dark:text-gray-300  text-start hover:underline my-2">
             Cambiar contraseña
           </button>
           <Button
@@ -230,7 +233,6 @@ export default function Profile() {
             Guardar cambios
           </Button>
         </article>
-        
       </section>
     </>
   );

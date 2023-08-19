@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import UserContext from "./userContext";
 import { useSession } from "next-auth/react";
 
@@ -6,12 +6,7 @@ const UserState = ({ children }) => {
   const [Loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
   const { data: session } = useSession();
-
-  useEffect(() => {
-    getUser();
-  }, [session]);
-
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     if (!session) return;
     try {
       const res = await fetch(
@@ -28,7 +23,11 @@ const UserState = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session, user]);
+
+  useEffect(() => {
+    getUser();
+  }, [session, getUser]);
 
   const deleteUser = () => {
     setUser(null);

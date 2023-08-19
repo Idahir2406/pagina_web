@@ -5,7 +5,7 @@ import NextImage from "next/image";
 function ProductCard({ href, image, name, price, altName }) {
   return (
     <Link className="" href={href}>
-      <div className="w-72 rounded-md border bg-white">
+      <div className="w-72 rounded-md border bg-white dark:bg-slate-800 dark:border-none">
         <div className=" overflow-hidden rounded-t-md hover:opacity-80 transition">
           <Image
             as={NextImage}

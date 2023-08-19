@@ -1,7 +1,7 @@
 
 import ProfileLayout from "components/profileLayout";
-import { TableRow } from "../../../../../components/littleComponents/tableRow";
-import { useUser } from "../../../../../hooks/useUser";
+import { TableRow } from "components/littleComponents/tableRow";
+import { useUser } from "hooks/useUser";
 import { Button } from "@nextui-org/react";
 import { AiOutlinePlus } from "react-icons/ai";
 export default function Addresses() {

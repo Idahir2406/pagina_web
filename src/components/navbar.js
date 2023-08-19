@@ -44,8 +44,8 @@ export default function Navbar() {
   return (
     //
     <>
-      <header className="w-full dark:bg-slate-800 bg-white shadow-sm sticky top-0 z-50">
-        <nav className="flex bg-white dark:bg-slate-800  py-5 w-[92%] justify-between items-center mx-auto">
+      <header className="w-full dark:bg-slate-800 bg-white shadow-sm sticky top-0 z-50 opacity-95">
+        <nav className="flex py-5 w-[92%] justify-between items-center mx-auto">
           <div className="flex gap-6 justify-center items-center">
             <NavLink href="/">
               <p className="text-xl dark:text-white">Christmas</p>

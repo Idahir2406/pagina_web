@@ -1,11 +1,10 @@
-import { Input, Textarea, Button, Image } from "@nextui-org/react";
+import { Input, Textarea,  Image } from "@nextui-org/react";
 import { CategorySelector } from "./CategorySelector";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { BsCameraFill } from "react-icons/bs";
 import { InputFile } from "../littleComponents/InputFile";
-import { Spinner } from "@nextui-org/react";
 import Popover from "../buttons/Popover";
-import { useRouter } from "next/router";
+
 export const AddTab = () => {
   const [selected, setSelected] = useState(new Set(["Muñecos"]));
   const [product, setProduct] = useState({
