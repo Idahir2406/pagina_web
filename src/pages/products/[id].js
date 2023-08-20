@@ -132,7 +132,7 @@ export default function ProductDetails({ product, error }) {
 
 export async function getServerSideProps({ query: { id } }) {
   try {
-    const res = await fetch(`/api/products/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`);
     if (res.status === 200) {
       const product = await res.json();
       return {

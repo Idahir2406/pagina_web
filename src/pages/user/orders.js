@@ -15,15 +15,17 @@ export default function Orders({ ordersData }) {
                 <h2 className=" ">Dirección de facturación </h2>
               </div>
               <div className="col-span-2">
-                <h2>
-                  Información de pago
-                </h2>
+                <h2>Información de pago</h2>
                 <div className="text-default-500 text-sm">
-                <p>{orderData.paymentMethod.name}</p>
-                <p>{orderData.paymentMethod.type}</p>
+                  <p>{orderData.paymentMethod.name}</p>
+                  <p>{orderData.paymentMethod.type}</p>
                 </div>
-                </div>
-              <Summary subtotal={orderData.subtotal} total={orderData.total} shipping={orderData.shippingCost} />
+              </div>
+              <Summary
+                subtotal={orderData.subtotal}
+                total={orderData.total}
+                shipping={orderData.shippingCost}
+              />
             </div>
           </div>
         );
@@ -43,7 +45,7 @@ export async function getServerSideProps(ctx) {
     };
   }
   const res = await fetch(
-    `/api/user/orders?email=${session.user.email}`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/user/orders?email=${session.user.email}`
   );
   const data = await res.json();
   return {

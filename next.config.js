@@ -24,7 +24,7 @@ const nextConfig = {
     NEXTAUTH_JWT_SIGNING_KEY: "myjwtsigningkey",
     NEXTAUTH_JWT_ENCRYPTION_KEY: "myjwtencryptionkey",
     NEXTAUTH_URL: "https://chrismasstore.vercel.app/",
-    NEXT_PUBLIC_API_URL: "https://chrismasstore.vercel.app/",
+    NEXT_PUBLIC_API_URL: "https://chrismasstore.vercel.app",
   },
 
 };
