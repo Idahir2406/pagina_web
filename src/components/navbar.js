@@ -32,7 +32,7 @@ export default function Navbar() {
     },
     {
       label: "Configuración",
-      url: "http://localhost:3000/products/1",
+      url: "/products/1",
     },
 
     {
@@ -61,11 +61,11 @@ export default function Navbar() {
               >
                 Carrito
               </NavLink>
-              <NavLink href="/user/orders">
+              <NavLink className="hidden md:block dark:text-white dark:hover:text-gray-200" href="/user/orders">
                 Pedidos
               </NavLink>
               <NavLink
-                href="/user/products/wishList"
+                href="/user/wishList"
                 className="hidden md:block dark:text-white dark:hover:text-gray-200"
               >
                 Favoritos
@@ -100,10 +100,10 @@ export default function Navbar() {
               <ThemeSwitch />
 
               <Button as={Link} href="/auth/registro">
-                Registro
+                Registrate
               </Button>
               <Button className="bg-indigo-700" href="/auth/login" as={Link}>
-                Login
+                Inicia Sesión
               </Button>
             </div>
             // <Dropdown options={authOptions}>

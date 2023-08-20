@@ -2,9 +2,8 @@ import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Image from "next/image";
 import { Selector } from "./selector";
-import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
-
+import { IconButton } from "components/buttons/IconButton";
 export default function ProductCart({
   product,
   addProduct,
@@ -20,46 +19,42 @@ export default function ProductCart({
   // }, [selected]);
 
   return (
-    <div className="flex border-t w-10/12 items-center h-72 mb-4 gap-10" >
-      <div className="w-48 h-52 rounded-md overflow-hidden">
-        {loading ? (
-          <Skeleton height={200} width={200} />
-        ) : (
-          <Image
-            className="w-full h-full object-cover"
-            alt="cartProductImage"
-            src={product.image}
-            width={200}
-            height={200}
-          />
-        )}
+    <div className="border-t grid grid-cols-6 md:grid-cols-9 py-6 w-full max-w-5xl gap-4">
+      <div className="col-span-3 md:col-span-2  rounded-md overflow-hidden ">
+        <Image
+          className="w-full h-full object-cover"
+          alt="cartProductImage"
+          src={product.image}
+          width={200}
+          height={200}
+        />
       </div>
-      <div className="flex items-start flex-wrap justify-between w-2/3">
-        <div className="flex flex-col h-52 gap-1">
-          {loading ? (
-            <>
-              <Skeleton height={20} width={200} />
-              <Skeleton height={16} width={200} />
-              <Skeleton height={16} width={80} />
-            </>
-          ) : (
-            <>
-              <Link className="text-md cursor-pointer" href={`/products/${product._id}`}>
-                {product.name}
-              </Link>
-              <p className="text-sm text-gray-500">{product.description}</p>
-              <p className="text-sm">${product.price}.00</p>
-            </>
-          )}
+      <div className="flex flex-col md:flex-row col-span-2 md:col-span-6 justify-between gap-6 md:gap-0">
+        <div className="md:col-span-4 flex flex-col  gap-1 ">
+          <Link
+            className="text-md cursor-pointer"
+            href={`/products/${product._id}`}
+          >
+            {product.name}
+          </Link>
+          <p className="text-sm text-gray-500 dark:text-default-600">
+            {product.description}
+          </p>
+          <p className="text-sm">${product.price}.00</p>
         </div>
-        <Selector options={options} selected={selected} setSelected={setSelected} />
-        <button
-          onClick={()=>deleteProduct(product._id)}
-          type="button"
-          className="text-gray-400 hover:text-gray-600"
-        >
+        <div className="col-span-1 md:col-span-1">
+        <Selector
+          options={options}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      </div>
+      </div>
+      
+      <div className="col-span-1 md:col-span-1 text-end">
+        <IconButton type="button" onPress={() => deleteProduct(product._id)}>
           <IoMdClose className="cursor-pointer" size={20} />
-        </button>
+        </IconButton>
       </div>
     </div>
   );

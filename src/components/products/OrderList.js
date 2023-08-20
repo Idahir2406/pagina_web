@@ -4,14 +4,14 @@ export const OrderList = ({ order }) => {
     <ul className="flex flex-col gap-4 divide-y-1">
       {order.order.map((product, index) => (
         <li className="" key={index}>
-          <article className="p-8 gap-6 grid grid-cols-12 ">
-            <div className="col-span-6 flex  gap-6">
+          <article className="p-8 gap-6 grid md:grid-cols-12  justify-center">
+            <div className="md:col-span-6 flex flex-col md:flex-row gap-6">
               <picture className="">
                 <Image
                   shadow="lg"
                   radius="md"
                   alt={product.name}
-                  className="w-full object-cover h-[140px]"
+                  className="w-full object-cover md:h-[250px]"
                   src={product.image}
                 />
               </picture>
@@ -29,20 +29,23 @@ export const OrderList = ({ order }) => {
                 </p>
               </div>
             </div>
-            <div className="col-span-3 flex flex-col gap-2">
-              <h3>Dirección de envío:</h3>
-              <div className="text-default-500 text-sm">
-                <p>{order.address.street}</p>
-                <p>{order.address.city}</p>
-                <p>{order.address.state}</p>
-                <p>{order.address.postalCode}</p>
+
+            <div className="grid grid-cols-2 md:col-span-6 ">
+              <div className="flex flex-col gap-2">
+                <h3>Dirección de envío:</h3>
+                <div className="text-default-500 text-sm">
+                  <p>{order.address.street}</p>
+                  <p>{order.address.city}</p>
+                  <p>{order.address.state}</p>
+                  <p>{order.address.postalCode}</p>
+                </div>
               </div>
-            </div>
-            <div className="col-span-3">
-              <h3>Estado del pedido:</h3>
-              <div className="text-default-500 text-sm">
-                <p>{order.email}</p>
-                <p>{order.phoneNumber}</p>
+              <div className="flex flex-col gap-2" >
+                <h3>Estado del pedido:</h3>
+                <div className="text-default-500 text-sm">
+                  <p>{order.email}</p>
+                  <p>{order.phoneNumber}</p>
+                </div>
               </div>
             </div>
           </article>

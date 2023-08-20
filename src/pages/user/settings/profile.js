@@ -8,6 +8,7 @@ import { BsCameraFill } from "react-icons/bs";
 import { useUser } from "hooks/useUser";
 import { Tooltip } from "../../../components/buttons/Tooltip";
 import { InputFile } from "components/littleComponents/InputFile";
+import NextImage from "next/image";
 export default function Profile() {
   const [change, setChange] = useState(false);
   const [userInfo, setUserInfo] = useState({
@@ -71,8 +72,6 @@ export default function Profile() {
     }
   };
 
-
-
   return (
     <>
       <Head>
@@ -91,20 +90,27 @@ export default function Profile() {
                 accept=".jpg, .jpeg, .png"
                 className="cursor-pointer"
               >
-                <Image className="max-h-44" alt="product" src={user.image} />
+                {/*  */}
+                <Image
+                  as={NextImage}
+                  width={275}
+                  height={750}
+                  priority
+                  className="md:max-h-64 object-cover"
+                  alt="product"
+                  src={user.image}
+                />
               </InputFile>
             ) : (
-              <div className="flex flex-col items-center">
-                <InputFile
-                  name="image"
-                  onChange={handleFileSelected}
-                  accept=".jpg, .jpeg, .png"
-                  className={`h-36 w-36  rounded-md cursor-pointer flex items-center justify-center relative  transition-colors text-gray-400 `}
-                >
-                  {" "}
-                  <BsCameraFill size={90} />
-                </InputFile>
-              </div>
+              <InputFile
+                name="image"
+                onChange={handleFileSelected}
+                accept=".jpg, .jpeg, .png"
+                className={`w-64 h-64  rounded-2xl cursor-pointer flex items-center justify-center relative  transition-colors text-gray-400 dark:bg-slate-700`}
+              >
+                {" "}
+                <BsCameraFill size={90} />
+              </InputFile>
             )}
           </picture>
         </article>

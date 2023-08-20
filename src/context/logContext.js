@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-
+import { Spinner } from "@nextui-org/react";
 const LogContext = createContext();
 
 export function LogProvider({ children }) {
@@ -13,15 +13,24 @@ export function LogProvider({ children }) {
 
   // Agregar un indicador de carga mientras se verifica la sesión
   if (status === "loading") {
-    return <p>Cargando...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <Spinner size="lg" color="secondary" />
+          <p>Cargando...</p>
+        </div>
+      </div>
+    );
   }
 
   const logout = () => {
     setIsLogged(false);
-  }
+  };
 
   return (
-    <LogContext.Provider value={{ isLogged, setIsLogged,logout,redirectUrl,setRedirectUrl }}>
+    <LogContext.Provider
+      value={{ isLogged, setIsLogged, logout, redirectUrl, setRedirectUrl }}
+    >
       {children}
     </LogContext.Provider>
   );

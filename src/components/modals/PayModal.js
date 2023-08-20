@@ -73,7 +73,7 @@ export const PayModal = ({calculo}) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Finalizar Compra</ModalHeader>
               <ModalBody>
                <PayAccordion addresses={user.adresses} selected={selected} setSelected={setSelected} paymentMethods={user.paymentMethods}/>
               </ModalBody>

@@ -16,7 +16,7 @@ export const Modal = ({ isOpen, setIsOpen }) => {
 
   const handleReport = async() => {
     if(selectedOption === "report4"){
-      const res = await fetch(`http://localhost:3000/api/report/${selectedOption}`,{
+      const res = await fetch(`/api/report/${selectedOption}`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ export const Modal = ({ isOpen, setIsOpen }) => {
       const data = await res.json()
       console.log(data)
     }
-    const res = await fetch(`http://localhost:3000/api/report/${selectedOption}`)
+    const res = await fetch(`/api/report/${selectedOption}`)
     const data = await res.json()
   }
 

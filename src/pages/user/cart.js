@@ -5,7 +5,7 @@ import Link from "next/link";
 import "react-loading-skeleton/dist/skeleton.css";
 import Head from "next/head";
 import { useUser } from "../../hooks/useUser";
-import {  Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { PayModal } from "../../components/modals/PayModal";
 const Cart = () => {
   const { user, Loading, getUser } = useUser();
@@ -14,21 +14,15 @@ const Cart = () => {
     envio: 10,
     total: 0,
   });
-  
-
-  
 
   const deleteProduct = async (productId) => {
-    const res = await fetch(
-      `/api/user/products/${user.email}/${productId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId }),
-      }
-    );
+    const res = await fetch(`/api/user/products/${user.email}/${productId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId }),
+    });
     if (res.status === 200) {
       console.log("Producto eliminado");
       getUser();
@@ -58,19 +52,15 @@ const Cart = () => {
     });
   };
 
-
   const addProduct = async (quantity, id) => {
     try {
-      const res = await fetch(
-        `/api/user/products/${user.email}/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ quantity }),
-        }
-      );
+      const res = await fetch(`/api/user/products/${user.email}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantity }),
+      });
       const data = await res.json();
 
       return data;
@@ -88,18 +78,17 @@ const Cart = () => {
 
   return (
     <div className="mt-10">
+      <Head>
+        <title>Carrito</title>
+        <meta name="description" content="Carrito de compras" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       {user.cart && (
         <h1 className="text-4xl mb-6 block font-bold dark:text-gray-200">
           Carrito
         </h1>
       )}
-      <div className="grid md:grid-cols-8  lg:grid-cols-12">
-        <Head>
-          <title>Carrito</title>
-          <meta name="description" content="Carrito de compras" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
+      <div className="grid md:grid-cols-8  lg:grid-cols-12 gap-4">
         <section className="flex flex-col items-center md:items-start md:col-span-5 lg:col-span-8  ">
           {!Loading ? (
             <>
@@ -137,7 +126,7 @@ const Cart = () => {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl dark:text-gray-200">Resumen de compra</h2>
           </div>
-          <div className="flex text-gray-600 dark:text-gray-200 text-sm flex-col divide-y gap-6">
+          <div className="flex text-gray-600 dark:text-gray-200 text-sm flex-col divide-y gap-6 mb-6">
             <div className="flex justify-between ">
               <p>Subtotal </p>
               <p>${calculo.subtotal}.00</p>

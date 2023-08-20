@@ -55,10 +55,13 @@ export const ProfileDropdown = ({ src, role, children, username }) => {
           className="block md:hidden"
           showDivider
         >
-          <DropdownItem as={Link} href="/user/products/cart" key="cart">
+          <DropdownItem as={Link} href="/user/cart" key="cart">
             Carrito
           </DropdownItem>
-          <DropdownItem as={Link} href="/user/products/wishList" key="wishList">
+          <DropdownItem as={Link} href="/user/orders" key="orders">
+            Pedidos
+          </DropdownItem>
+          <DropdownItem as={Link} href="/user/wishList" key="wishList">
             Favoritos
           </DropdownItem>
         </DropdownSection>
@@ -66,7 +69,7 @@ export const ProfileDropdown = ({ src, role, children, username }) => {
           <DropdownItem as={Link} href="/user/settings/profile" key="profile">
             Perfil
           </DropdownItem>
-          <DropdownItem href="http://localhost:3000/products/1" key="settings">
+          <DropdownItem href="/products/1" key="settings">
             Configuración
           </DropdownItem>
           {children}

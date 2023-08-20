@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import { BsSunFill, BsMoonFill } from "react-icons/bs";
-import { IconButton } from "./iconButton";
 import { Button } from "@nextui-org/react";
 export default function ThemeSwitch() {
   const { systemTheme, theme, setTheme } = useTheme();
