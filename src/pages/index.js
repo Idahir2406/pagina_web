@@ -3,7 +3,7 @@ import Head from "next/head";
 
 
 export default function Home({ products }) {
-  
+
   return (
     <div className="mx-auto  lg:max-w-7xl  ">
       <Head>
@@ -30,8 +30,10 @@ export default function Home({ products }) {
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch("/api/products");
+    console.log("entro a getServerSideProps");
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/products");
     const data = await res.json();
+    console.log(data);
     return {
       props: {
         products: data,
