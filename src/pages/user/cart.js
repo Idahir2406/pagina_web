@@ -5,8 +5,7 @@ import Link from "next/link";
 import "react-loading-skeleton/dist/skeleton.css";
 import Head from "next/head";
 import { useUser } from "../../hooks/useUser";
-import { CircularProgress, Spinner } from "@nextui-org/react";
-import Popover from "../../components/buttons/Popover";
+import {  Spinner } from "@nextui-org/react";
 import { PayModal } from "../../components/modals/PayModal";
 const Cart = () => {
   const { user, Loading, getUser } = useUser();
@@ -21,7 +20,7 @@ const Cart = () => {
 
   const deleteProduct = async (productId) => {
     const res = await fetch(
-      `http://localhost:3000/api/user/products/${user.email}/${productId}`,
+      `/api/user/products/${user.email}/${productId}`,
       {
         method: "DELETE",
         headers: {
@@ -63,7 +62,7 @@ const Cart = () => {
   const addProduct = async (quantity, id) => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/user/products/${user.email}/${id}`,
+        `/api/user/products/${user.email}/${id}`,
         {
           method: "PUT",
           headers: {

@@ -5,9 +5,8 @@ import { RxPencil2 } from "react-icons/rx";
 import { AiOutlineInfo } from "react-icons/ai";
 import { Image, Button, Input } from "@nextui-org/react";
 import { BsCameraFill } from "react-icons/bs";
-
 import { useUser } from "hooks/useUser";
-import { Tooltip } from "components/buttons/tooltip";
+import { Tooltip } from "../../../components/buttons/Tooltip";
 import { InputFile } from "components/littleComponents/InputFile";
 export default function Profile() {
   const [change, setChange] = useState(false);
@@ -43,7 +42,7 @@ export default function Profile() {
     if (filteredUserInfo.adresses && filteredUserInfo.adresses.length === 0) {
       delete filteredUserInfo.adresses;
     }
-    const res = await fetch(`http://localhost:3000/api/user/${user.email}`, {
+    const res = await fetch(`/api/user/${user.email}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +58,7 @@ export default function Profile() {
     formData.append("image", file);
     try {
       // const url = await uploadProfilePic(file);
-      const res = await fetch(`http://localhost:3000/api/profileHandler`, {
+      const res = await fetch(`/api/profileHandler`, {
         method: "POST",
 
         body: formData,
@@ -72,26 +71,7 @@ export default function Profile() {
     }
   };
 
-  const handleDownload = async () => {
-    try {
-      const filename = "prueba.jpg"; // Reemplaza con el nombre de tu archivo
-      const response = await fetch(`/api/profileHandler?filename=${filename}`);
 
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        a.click();
-        window.URL.revokeObjectURL(url);
-      } else {
-        console.error("Error al descargar el archivo");
-      }
-    } catch (error) {
-      console.error("Error al descargar el archivo:", error);
-    }
-  };
 
   return (
     <>

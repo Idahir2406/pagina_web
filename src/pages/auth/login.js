@@ -47,13 +47,13 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     if (router.query.redirect)
       return await signIn("google", {
-        callbackUrl: `http://localhost:3000${router.query.redirect}`,
+        callbackUrl: `${router.query.redirect}`,
       });
-    await signIn("google", { callbackUrl: `http://localhost:3000` });
+    await signIn("google", { callbackUrl: `/` });
   };
 
   const handleFacebookLogin = async () => {
-    signIn("facebook", { callbackUrl: "http://localhost:3000/" });
+    signIn("facebook", { callbackUrl: "/" });
   };
 
   const router = useRouter();
@@ -73,7 +73,7 @@ export default function LoginPage() {
         localStorage.setItem("user", JSON.stringify(res));
         await getUser();
         if (router.query.redirect)
-        router.push(`http://localhost:3000${router.query.redirect}`);
+        router.push(`${router.query.redirect}`);
       router.push("/");
       } else {
         setErrors({ ...errors, password: "Email o contraseña invalidos" });

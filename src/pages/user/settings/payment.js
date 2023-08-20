@@ -45,7 +45,7 @@ export async function getServerSideProps(ctx) {
     };
   }
   const res = await fetch(
-    `http://localhost:3000/api/user/${session.user.email}`
+    `/api/user/${session.user.email}`
   );
   const userData = await res.json();
   const PaymentData = userData.paymentMethods;

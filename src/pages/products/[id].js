@@ -38,7 +38,7 @@ export default function ProductDetails({ product, error }) {
       quantity,
     };
     const res = await fetch(
-      `http://localhost:3000/api/user/products/${session.user.email}/${product._id}`,
+      `/api/user/products/${session.user.email}/${product._id}`,
       {
         method: "POST",
         headers: {
@@ -59,7 +59,7 @@ export default function ProductDetails({ product, error }) {
 
     if (!wish) {
       await fetch(
-        `http://localhost:3000/api/users/products/${product._id}/wishList`,
+        `/api/users/products/${product._id}/wishList`,
         {
           method: "POST",
           headers: {
@@ -69,7 +69,7 @@ export default function ProductDetails({ product, error }) {
       );
     } else {
       await fetch(
-        `http://localhost:3000/api/products/${product._id}/wishList`,
+        `/api/products/${product._id}/wishList`,
         {
           method: "DELETE",
           headers: {
@@ -132,7 +132,7 @@ export default function ProductDetails({ product, error }) {
 
 export async function getServerSideProps({ query: { id } }) {
   try {
-    const res = await fetch(`http://localhost:3000/api/products/${id}`);
+    const res = await fetch(`/api/products/${id}`);
     if (res.status === 200) {
       const product = await res.json();
       return {

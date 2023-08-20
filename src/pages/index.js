@@ -1,17 +1,9 @@
 import ProductCard from "../components/Product_card";
-import { useContext } from "react";
-import { SearchContext } from "../context/searchContext";
 import Head from "next/head";
 
 
 export default function Home({ products }) {
-  // const { searchTerm } = useContext(SearchContext);
-
-  // if (searchTerm) {
-  //   products = products.filter((product) =>
-  //     product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  // }
+  
   return (
     <div className="mx-auto  lg:max-w-7xl  ">
       <Head>
@@ -38,7 +30,7 @@ export default function Home({ products }) {
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch("http://localhost:3000/api/products");
+    const res = await fetch("/api/products");
     const data = await res.json();
     return {
       props: {

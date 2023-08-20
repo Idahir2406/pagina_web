@@ -43,7 +43,7 @@ export async function getServerSideProps(ctx) {
     };
   }
   const res = await fetch(
-    `http://localhost:3000/api/user/orders?email=${session.user.email}`
+    `/api/user/orders?email=${session.user.email}`
   );
   const data = await res.json();
   return {

@@ -10,14 +10,14 @@ import { v4 } from "uuid";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBnHWEOwv-ZcU6JD0pXh079uMOF-S0irH0",
-  authDomain: "christmasstore-c5b20.firebaseapp.com",
-  projectId: "christmasstore-c5b20",
-  storageBucket: "christmasstore-c5b20.appspot.com",
-  messagingSenderId: "797441401606",
-  appId: "1:797441401606:web:138b5f1305e4eb6b59f487",
-  measurementId: "G-SB9QTM64HT",
-  storageBucket: "gs://christmasstore-c5b20.appspot.com",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
 };
 
 // Initialize Firebase

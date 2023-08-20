@@ -14,7 +14,7 @@ export const PayModal = ({calculo}) => {
   const emptyCart = async() => {
     try {
       const res = await fetch(
-        `http://localhost:3000/api/user/cart/${user.email}`,
+        `/api/user/cart/${user.email}`,
         {
           method: "DELETE",
           headers: {
@@ -37,7 +37,7 @@ export const PayModal = ({calculo}) => {
      
       let today = new Date();
       let date = today.toLocaleString();
-      const res = await fetch(`http://localhost:3000/api/user/orders`, {
+      const res = await fetch(`/api/user/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
