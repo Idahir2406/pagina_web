@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { User as normalUser } from "../../../services/constants";
 import { connectDB } from "utils/mongoose";
 import User from "../../../models/user";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 connectDB();
 export const authOptions = {
@@ -106,8 +106,8 @@ export const authOptions = {
     },
   },
   pages: {
-    signIn: "/auth/login",
-    signOut: "/auth/login",
+    signIn: "/auth/signin",
+    signOut: "/auth/signin",
     error: "/auth/error", // Error code passed in query string as ?error=
   },
   secret: process.env.NEXTAUTH_SECRET,

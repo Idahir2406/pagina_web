@@ -2,14 +2,19 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FormContainer, Form } from "components/form";
-import { SocialContainer, Social } from "components/littleComponents/social";
-import { AiOutlineGooglePlus, AiOutlineTwitter } from "react-icons/ai";
-import { GrFacebookOption } from "react-icons/gr";
 import { Input, Checkbox, Button } from "@nextui-org/react";
-import bcrypt from "bcryptjs";
+import { useToggle } from "hooks/useToggle";
+import dynamic from "next/dynamic";
 
-export default function Registro() {
+const Spinner = dynamic(
+  () => import("@nextui-org/react").then((mod) => mod.Spinner),
+  {
+    ssr: false,
+  }
+);
+export default function Signup() {
   const { push } = useRouter();
+  const { toggle, setToggle } = useToggle();
   const [newUser, setNewUser] = useState({
     username: "",
     email: "",
@@ -42,6 +47,32 @@ export default function Registro() {
     return errors;
   };
 
+  const handleGoogleLogin = async () => {
+    const signIn = await import("next-auth/react").then((mod) => mod.signIn);
+    await signIn("google", { callbackUrl: `/` });
+  };
+
+  const createUser = async () => {
+    try {
+      setToggle(true);
+      const res = await fetch("/api/auth/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...newUser, password: newUser.password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) setErrors(data);
+      push("/auth/signin");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setToggle(false);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({
@@ -54,34 +85,10 @@ export default function Registro() {
     createUser();
   };
 
-  const createUser = async () => {
-    try {
-      // Encriptar la contraseña antes de enviarla al servidor
-      const hashedPassword = await bcrypt.hash(newUser.password, 10);
-
-      const response = await fetch("/api/auth/signUp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...newUser, password: hashedPassword }),
-      });
-
-      const data = await response.json();
-      if (response.status === 400) {
-        setErrors(data);
-      } else {
-        push("/auth/login");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <FormContainer>
       <Form onSubmit={handleSubmit} cl>
-        <p>Registrate</p>
+        <p>¡Vamos a empezar!</p>
 
         <Input
           label="Nombre de usuario"
@@ -117,34 +124,33 @@ export default function Registro() {
             errorMessage={errors.password2}
           />
         </div>
-        <div>
-          <Checkbox color="secondary" defaultSelected>
-            Acepta los términos y condiciones
-          </Checkbox>
-        </div>
-        <div>
-          <Button type="submit" className="bg-indigo-700 text-white">
-            Continuar
-          </Button>
-          <p>
-            ¿Ya tienes una cuenta? <Link href="./login">Inicia sesión</Link>
+
+        <Checkbox className="text-sm" color="secondary" defaultSelected>
+          <p className="text-sm">Acepta los términos y condiciones</p>
+        </Checkbox>
+
+        <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-3">
+            <Button
+              type="submit"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white w-full"
+            >
+              {toggle ? <Spinner /> : "Continuar"}
+            </Button>
+            <Button
+              onPress={handleGoogleLogin}
+              className="bg-transparent ring-indigo-700 ring-1 hover:ring-2  transition"
+            >
+              Google
+            </Button>
+          </div>
+          <p className="text-xs mt-1">
+            ¿Ya tienes una cuenta?{" "}
+            <Link className="hover:underline text-indigo-500" href="./signin">
+              Inicia sesión
+            </Link>
           </p>
         </div>
-
-        <SocialContainer>
-          <Social>
-            <AiOutlineTwitter
-              style={{ color: "#feffff", fontSize: "1.7em", cursor: "pointer" }}
-            />
-            <AiOutlineGooglePlus
-              style={{ color: "#feffff", fontSize: "1.8em", cursor: "pointer" }}
-            />
-            <GrFacebookOption
-              style={{ color: "#feffff", fontSize: "1.3em", cursor: "pointer" }}
-            />
-          </Social>
-        </SocialContainer>
-
       </Form>
     </FormContainer>
   );

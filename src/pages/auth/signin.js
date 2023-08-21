@@ -1,18 +1,12 @@
-import { signIn } from "next-auth/react";
+
 import { useState } from "react";
 import { useRouter } from "next/router";
-
 import Link from "next/link";
-import { FormContainer, Form } from "components/form";
-import { SocialContainer, Social } from "components/littleComponents/social";
-import { FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
-import emailValidator from "email-validator";
 import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
-import { SocialButton } from "../../components/littleComponents/social";
 import { Input, Button, Spinner } from "@nextui-org/react";
 import { useUser } from "hooks/useUser";
 
-export default function LoginPage() {
+export default function Signin() {
   const { getUser } = useUser();
   
   const [email, setEmail] = useState("");
@@ -23,9 +17,9 @@ export default function LoginPage() {
     password: "",
   });
 
-  const validate = () => {
+  const validate = async() => {
     const errors = {};
-
+    const emailValidator = await import("email-validator");
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
 
@@ -45,6 +39,7 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
+    const signIn = await import("next-auth/react").then((mod) => mod.signIn);
     if (router.query.redirect)
       return await signIn("google", {
         callbackUrl: `${router.query.redirect}`,
@@ -52,9 +47,9 @@ export default function LoginPage() {
     await signIn("google", { callbackUrl: `/` });
   };
 
-  const handleFacebookLogin = async () => {
-    signIn("facebook", { callbackUrl: "/" });
-  };
+  // const handleFacebookLogin = async () => {
+  //   signIn("facebook", { callbackUrl: "/" });
+  // };
 
   const router = useRouter();
   const handleSubmit = async (event) => {
@@ -92,7 +87,7 @@ export default function LoginPage() {
         className="rounded-md p-5 flex flex-col gap-3 justify-center bg-gray-50  dark:bg-slate-800 w-96"
         onSubmit={handleSubmit}
       >
-        <p className="text-2xl ">Inicia sesión</p>
+        <p className="text-2xl ">Bienvenido de nuevo :)</p>
         <div className="flex flex-col">
           <div className="flex flex-col gap-4">
             <Input
@@ -119,15 +114,15 @@ export default function LoginPage() {
               errorMessage={errors.password}
             />
           </div>
-          <div className="flex flex-col md:flex-row gap-4">
-            <Link className="text-sm hover:underline" href="./login">
+          <div className="flex md:flex-row gap-4 mt-2  justify-between ">
+            <Link className="text-xs hover:underline" href="./login">
               ¿Olvidaste tu contraseña?
             </Link>
-            <p className="text-sm flex flex-col">
+            <p className="text-xs text-end">
               ¿No tienes una cuenta?
               <Link
                 className="hover:underline md:text-end text-violet-400"
-                href="./registro"
+                href="./signup"
               >
                 Regístrate
               </Link>

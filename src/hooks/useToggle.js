@@ -7,5 +7,5 @@ export const useToggle = () => {
     setToggle(!toggle);
   };
 
-  return { toggle, toggleHandler };
+  return { toggle, toggleHandler,setToggle };
 };

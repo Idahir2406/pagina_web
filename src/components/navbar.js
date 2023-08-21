@@ -1,5 +1,4 @@
-//react and next imports
-import { signOut } from "next-auth/react";
+
 //icons imports
 import { Searchbox } from "./searchbox";
 import { NavLink } from "./littleComponents/navLink";
@@ -9,40 +8,27 @@ import { Button, DropdownItem } from "@nextui-org/react";
 import ThemeSwitch from "./littleComponents/ThemeSwitch";
 import { useLogContext } from "../hooks/useIsLoggedIn";
 import Link from "next/link";
+import { authOptions,profileOptions  } from "../services/constants";
+const AuthDropdown = dynamic(() =>
+  import("./dropdowns/dropdownParts/dropdown")
+);
 const DynamicLink = dynamic(() => import("next/link"));
-const Dropdown = dynamic(() =>
+const Dropdown = dynamic(
   import("./dropdowns/ProfileDropdown").then((mod) => mod.ProfileDropdown)
 );
+
+
 
 export default function Navbar() {
   const { user, deleteUser, Loading } = useUser();
   const { isLogged, logout } = useLogContext();
-  const handleLogout = async() => {
-    const signOut = (await import('next-auth/react').then((mod) => mod.signOut))
+
+  const handleLogout = async () => {
+    const signOut = await import("next-auth/react").then((mod) => mod.signOut);
     signOut({ redirect: false });
     logout();
     deleteUser();
   };
-
-  const toggleDarkMode = () => {
-    document.documentElement.classList.toggle("dark");
-  };
-
-  const profileOptions = [
-    {
-      label: "Perfil",
-      url: "/user/settings/profile",
-    },
-    {
-      label: "Configuración",
-      url: "/products/1",
-    },
-
-    {
-      label: "Cerrar sesión",
-      action: handleLogout,
-    },
-  ];
 
   return (
     //
@@ -80,43 +66,24 @@ export default function Navbar() {
 
               <div className="flex gap-1 items-center justify-between">
                 <Dropdown
-                  src={!Loading && user && user.avatar }
-                  username={!Loading && user && user.username }
+                  src={!Loading && user && user.avatar}
+                  username={!Loading && user && user.username}
                   options={profileOptions}
-                  role={!Loading && user && user.role }
+                  role={!Loading && user && user.role}
                 >
                   <DropdownItem key="logout" onPress={handleLogout}>
                     Cerrar Sesión
                   </DropdownItem>
                 </Dropdown>
 
-                {/* <Dropdown options={notifications}>
-                  <IconButton size={25}>
-                    <IoMdNotificationsOutline />
-                  </IconButton>
-                </Dropdown>
-                <Dropdown options={profileOptions}>
-                  <Avatar isBordered  src={user.image} name={user.username} />
-                </Dropdown> */}
-                {/* <button onClick={toggleDarkMode} className="bg-violet-500 hover:bg-violet-600 py-2 px-3 rounded-md text-white">Dark Mode</button> */}
               </div>
             </div>
           ) : (
-            <div className="flex w-56 md:w-72 lg:w-96  items-center justify-between">
+            <div className="flex flex-row gap-8">
               <ThemeSwitch />
+              <AuthDropdown options={authOptions}>Comienza ahora</AuthDropdown>
 
-              <Button as={Link} href="/auth/registro">
-                Registrate
-              </Button>
-              <Button className="bg-indigo-700" href="/auth/login" as={Link}>
-                Inicia Sesión
-              </Button>
             </div>
-            // <Dropdown options={authOptions}>
-            //   <p className="bg-violet-600 text-white p-3 font-bold rounded-md">
-            //     Quiero comprar
-            //   </p>
-            // </Dropdown>
           )}
         </nav>
       </header>
