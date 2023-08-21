@@ -1,6 +1,6 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
-const ProductCard = dynamic(import ("components/Product_card"))
+const ProductCard = dynamic(import("components/Product_card"));
 
 export default function Home({ products }) {
   return (
@@ -11,7 +11,6 @@ export default function Home({ products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 justify-items-center">
-
         {products.map((product) => (
           <div key={product._id}>
             <ProductCard
@@ -23,13 +22,12 @@ export default function Home({ products }) {
             />
           </div>
         ))}
-        
       </div>
     </>
   );
 }
 
-export async function getServerSideProps() {
+export const getStaticProps = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
     const data = await res.json();
@@ -45,6 +43,7 @@ export async function getServerSideProps() {
       props: {
         products: [],
       },
+      revalidate: 60,
     };
   }
-}
+};
