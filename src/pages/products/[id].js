@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
 import Incrementador from "../../components/littleComponents/incrementador";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Button, Image } from "@nextui-org/react";
-
-import Popover from "components/buttons/popover"
+import Popover from "components/buttons/Popover"
 
 export default function ProductDetails({ product, error }) {
 
