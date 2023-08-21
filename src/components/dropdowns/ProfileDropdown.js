@@ -9,12 +9,7 @@ import {
 
 import Link from "next/link";
 import { Admin } from "../../services/constants";
-import dynamic from "next/dynamic";
 
-const DynamicLink = dynamic(() => import("next/link"));
-const DynamicDropdownItem = dynamic(() => import("@nextui-org/react").then((mod) => mod.DropdownItem),{
-  ssr: false,
-});
 export const ProfileDropdown = ({ src, role, children, username }) => {
   return (
     <Dropdown>
@@ -59,13 +54,13 @@ export const ProfileDropdown = ({ src, role, children, username }) => {
           className="block md:hidden"
           showDivider
         >
-          <DropdownItem  href="/user/cart" key="cart">
+          <DropdownItem as={Link}  href="/user/cart" key="cart">
             Carrito
           </DropdownItem>
-          <DropdownItem  href="/user/orders" key="orders">
+          <DropdownItem as={Link}   href="/user/orders" key="orders">
             Pedidos
           </DropdownItem>
-          <DropdownItem  href="/user/wishList" key="wishList">
+          <DropdownItem as={Link}   href="/user/wishList" key="wishList">
             Favoritos
           </DropdownItem>
         </DropdownSection>

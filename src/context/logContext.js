@@ -20,7 +20,7 @@ export function LogProvider({ children }) {
   
   if (status === "loading") {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-gray-200 dark:bg-slate-800">
         <div className="flex flex-col items-center justify-center gap-4">
           <Spinner size="lg" color="secondary" />
           <p>Cargando...</p>
