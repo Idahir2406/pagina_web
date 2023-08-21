@@ -1,8 +1,12 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {  ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import Popover from "../buttons/Popover";
 import { PayAccordion } from "../dropdowns/PayAccordion";
 import { useUser } from "../../hooks/useUser";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+const ModalContent = dynamic(() => import("@nextui-org/react").then((mod) => mod.ModalContent));  
+const Modal = dynamic(() => import("@nextui-org/react").then((mod) => mod.Modal));
+
 export const PayModal = ({calculo}) => {
   const { user, Loading, getUser } = useUser();
   const [message, setMessage] = useState("");

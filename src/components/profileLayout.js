@@ -4,7 +4,7 @@ export default function ProfileLayout({ children }) {
     <div className="flex mt-10 gap-4">
       <div className="hidden md:border-r md:w-[20%] md:flex md:flex-col md:gap-10">
         <Link href="/user/settings/profile">Información personal</Link>
-        <Link href="/user/settings/orders">Pedidos</Link>
+        <Link href="/user/settings/addresses">Dirección</Link>
         <Link href="/user/settings/payment">Métodos de pago</Link>
         <Link href="#">Cerrar sesión</Link>
       </div>

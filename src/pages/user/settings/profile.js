@@ -3,7 +3,7 @@ import { useState } from "react";
 import ProfileLayout from "components/profileLayout";
 import { RxPencil2 } from "react-icons/rx";
 import { AiOutlineInfo } from "react-icons/ai";
-import { Image, Button, Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { BsCameraFill } from "react-icons/bs";
 import { useUser } from "hooks/useUser";
 import { Tooltip } from "../../../components/buttons/Tooltip";
@@ -16,7 +16,7 @@ export default function Profile() {
     phoneNumber: "",
     adresses: [],
   });
-  const { user, loading, getUser } = useUser();
+  const { user, getUser } = useUser();
 
   const handleInputChange = (e) => {
     setUserInfo({
@@ -90,13 +90,11 @@ export default function Profile() {
                 accept=".jpg, .jpeg, .png"
                 className="cursor-pointer"
               >
-                {/*  */}
-                <Image
-                  as={NextImage}
+                <NextImage
                   width={275}
-                  height={750}
+                  height={275}
                   priority
-                  className="md:max-h-64 object-cover"
+                  className=" object-cover rounded-md"
                   alt="product"
                   src={user.image}
                 />

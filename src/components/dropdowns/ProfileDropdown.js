@@ -4,22 +4,26 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownSection,
-  Button,
-  Avatar,
-  User,
+  Avatar
 } from "@nextui-org/react";
+
 import Link from "next/link";
 import { Admin } from "../../services/constants";
+import dynamic from "next/dynamic";
 
+const DynamicLink = dynamic(() => import("next/link"));
+const DynamicDropdownItem = dynamic(() => import("@nextui-org/react").then((mod) => mod.DropdownItem),{
+  ssr: false,
+});
 export const ProfileDropdown = ({ src, role, children, username }) => {
   return (
     <Dropdown>
       <DropdownTrigger>
         <Avatar
+
           src={src}
           showFallback
           name={username}
-          as="button"
           isBordered
           className="cursor-pointer object-cover"
         />
@@ -55,13 +59,13 @@ export const ProfileDropdown = ({ src, role, children, username }) => {
           className="block md:hidden"
           showDivider
         >
-          <DropdownItem as={Link} href="/user/cart" key="cart">
+          <DropdownItem  href="/user/cart" key="cart">
             Carrito
           </DropdownItem>
-          <DropdownItem as={Link} href="/user/orders" key="orders">
+          <DropdownItem  href="/user/orders" key="orders">
             Pedidos
           </DropdownItem>
-          <DropdownItem as={Link} href="/user/wishList" key="wishList">
+          <DropdownItem  href="/user/wishList" key="wishList">
             Favoritos
           </DropdownItem>
         </DropdownSection>

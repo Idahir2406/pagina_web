@@ -31,13 +31,37 @@ export const uploadProfilePic = async (imageData) => {
     const storageRef = ref(storage, `profileUsersImages/${v4()}`);
     await uploadString(storageRef, imageData,"base64");
     const url = await getDownloadURL(storageRef);
-    console.log("Uploaded file at:", url);
     return url;
   } catch (error) {
     console.error("Error uploading profile pic:", error);
     throw error;
   }
 };
+
+export const uploadProfileImg = async (imageData) => {
+  try {
+    const storageRef = ref(storage, `profileUsersImages/${v4()}`);
+    await uploadBytes(storageRef, imageData,{contentType:"image/jpeg"});
+    const url = await getDownloadURL(storageRef);
+    return url;
+  } catch (error) {
+    console.error("Error uploading profile pic:", error);
+    throw error;
+  }
+};
+
+export const uploadAvatarImg = async (imageData) => {
+  try {
+    const storageRef = ref(storage, `avatars/${v4()}`);
+    await uploadBytes(storageRef, imageData,{contentType:"image/jpeg"});
+    const url = await getDownloadURL(storageRef);
+    return url;
+  } catch (error) {
+    console.error("Error uploading profile pic:", error);
+    throw error;
+  }
+};
+
 
 export const uploadProductPic = async (imageData) => {
   try {

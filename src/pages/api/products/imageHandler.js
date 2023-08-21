@@ -14,6 +14,7 @@ export default async function handler(req, res) {
     case "POST":
       const session = await getServerSession(req, res, authOptions);
       if (!session) return res.status(401).json({ error: "No autorizado" });
+      
       try {
         const form = formidable({ multiples: true });
         form.parse(req, async (err, fields, files) => {
@@ -26,9 +27,10 @@ export default async function handler(req, res) {
         
           try {
             const productPicture = files.image;
+            
             // Redimensionar la imagen
             const resizedImage = await sharp(productPicture.filepath)
-              .resize(400, 400)
+              .resize(300, 300)
               .toBuffer(); // Convert to buffer
             const ImageConverted = resizedImage.toString("base64");
             const imageUrl = await uploadProductPic(ImageConverted);

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState,useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { Spinner } from "@nextui-org/react";
 const LogContext = createContext();
@@ -7,11 +7,17 @@ export function LogProvider({ children }) {
   const { data: session, status } = useSession();
   const [isLogged, setIsLogged] = useState(!!session);
   const [redirectUrl, setRedirectUrl] = useState(null);
-  useEffect(() => {
-    setIsLogged(!!session);
+
+  const handleLogginState = useCallback(() => {
+    if(session) setIsLogged(!!session);
   }, [session]);
 
+  useEffect(() => {
+    handleLogginState()
+  }, [handleLogginState,]);
+
   // Agregar un indicador de carga mientras se verifica la sesión
+  
   if (status === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">

@@ -1,18 +1,11 @@
 import admin from "firebase-admin";
-import firebaseSevise from "utils/firebaseService.json";
 import formidable from "formidable";
 import User from "models/user";
 import { authOptions } from "./auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { uploadProfilePic } from "../../utils/firebase";
+import { uploadProfileImg,uploadAvatarImg } from "../../utils/firebase";
 import sharp from "sharp";
-const adminConfig = {
-  credential: admin.credential.cert(firebaseSevise),
-  storageBucket: "christmasstore-c5b20.appspot.com",
-};
-if (!admin.apps.length) {
-  admin.initializeApp(adminConfig);
-}
+
 export const config = {
   api: {
     bodyParser: false,
@@ -36,17 +29,34 @@ export default async function profileHandler(req, res) {
               .json({ error: "Error al procesar la solicitud" });
           }
           
-          const profilePicture = files.image;
+          const Picture = files.image;
+  
           // Redimensionar la imagen
-          const resizedImage = await sharp(profilePicture.filepath)
-            .resize(400, 400)
-            .toBuffer(); // Convert to buffer
-          const ImageConverted = resizedImage.toString("base64");
 
-          const imageUrl = await uploadProfilePic(ImageConverted);
+          const Avatar = await sharp(Picture.filepath)
+            .resize(125, 125)
+            .jpeg({
+              quality: 80,
+              chromaSubsampling: '4:4:4',
+              mozjpeg: true,
+            })
+            .toBuffer();
+          const profileImage = await sharp(Picture.filepath)
+            .resize(300, 300)
+            .jpeg({
+              quality: 80,
+              chromaSubsampling: '4:4:4',
+              mozjpeg: true,
+            })
+            .toBuffer();
+            // Convert to buffer
+
+          const imageUrl = await uploadProfileImg(profileImage);
+          const avatarUrl = await uploadAvatarImg(Avatar);
           // const url = uploadProfilePic(resizedImage);
           await User.findOneAndUpdate({email:session.user.email},{
-            image:imageUrl
+            image:imageUrl,
+            avatar:avatarUrl
           })
           return res.status(200).json("Imagen actualizada correctamente");
           // Copiar el archivo al destino

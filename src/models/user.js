@@ -56,6 +56,10 @@ const UserSchema=new Schema({
   clientOrders:{
     default: [],
     type: Array,
+  },
+  avatar:{
+    type: String,
+    
   }
 },{timestamps:true})
 

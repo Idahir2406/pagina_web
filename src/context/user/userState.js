@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import UserContext from "./userContext";
 import { useSession } from "next-auth/react";
-
+import { useLogContext } from "../../hooks/useIsLoggedIn";
 const UserState = ({ children }) => {
   const [Loading, setLoading] = useState(true);
+  const { isLogged,logout } = useLogContext();
+
   const [user, setUser] = useState({});
   const { data: session } = useSession();
 
   useEffect(() => {
     getUser();
-  }, [session]);
+  }, [isLogged]);
 
   const getUser = async () => {
     if (!session) return;

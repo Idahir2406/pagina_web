@@ -5,7 +5,7 @@ import Link from "next/link";
 import "react-loading-skeleton/dist/skeleton.css";
 import Head from "next/head";
 import { useUser } from "../../hooks/useUser";
-import { Spinner } from "@nextui-org/react";
+import { CartProduct } from "components/littleComponents/ProductSkeleton";
 import { PayModal } from "../../components/modals/PayModal";
 const Cart = () => {
   const { user, Loading, getUser } = useUser();
@@ -83,11 +83,11 @@ const Cart = () => {
         <meta name="description" content="Carrito de compras" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {user.cart && (
-        <h1 className="text-4xl mb-6 block font-bold dark:text-gray-200">
-          Carrito
-        </h1>
-      )}
+
+      <h1 className="text-4xl mb-6 block font-bold dark:text-gray-200">
+        Carrito
+      </h1>
+
       <div className="grid md:grid-cols-8  lg:grid-cols-12 gap-4">
         <section className="flex flex-col items-center md:items-start md:col-span-5 lg:col-span-8  ">
           {!Loading ? (
@@ -100,10 +100,10 @@ const Cart = () => {
                   addProduct={addProduct}
                   deleteProduct={deleteProduct}
                 />
-              ))}
+              ))}{" "}
             </>
           ) : (
-            <Spinner size="lg" />
+            <CartProduct />
           )}
           {!user.cart ||
             (user.cart.length <= 0 && (
