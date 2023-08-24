@@ -100,7 +100,7 @@ const Cart = () => {
                   addProduct={addProduct}
                   deleteProduct={deleteProduct}
                 />
-              ))}{" "}
+              ))}
             </>
           ) : (
             <CartProduct />
@@ -108,11 +108,11 @@ const Cart = () => {
           {!user.cart ||
             (user.cart.length <= 0 && (
               <>
-                <div className="flex flex-col justify-center items-center h-80">
-                  <h1 className="text-2xl">No hay productos en el carrito</h1>
+                <div className="flex flex-col justify-center items-center h-80  w-full">
+                  <h1 className="text-2xl font-medium">No hay productos en el carrito</h1>
                   <p>
                     Revisa tus favoritos o{" "}
-                    <Link className="text-violet-600 hover:underline" href="/">
+                    <Link className="text-indigo-500 hover:underline" href="/">
                       continua comprando
                     </Link>
                     .

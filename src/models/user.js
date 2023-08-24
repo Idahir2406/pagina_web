@@ -1,5 +1,23 @@
-import {Schema,model,models} from 'mongoose';
+import mongoose, {Schema,model,models} from 'mongoose';
 
+const adressSchema=new Schema({
+  street:{
+    type: String,
+    required: true,
+  },
+  state:{
+    type: String,
+    required: true,
+  },
+  city:{
+    type: String,
+    required: true,
+  },
+  reference:{
+    type: String,
+    required: true,
+  },
+})
 
 const UserSchema=new Schema({
   username: {
@@ -38,7 +56,7 @@ const UserSchema=new Schema({
   },
   adresses:{
     default: [],
-    type: Array,
+    type: [adressSchema],
   },
   chats:{
     default: [],

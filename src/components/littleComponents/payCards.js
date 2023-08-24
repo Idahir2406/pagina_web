@@ -8,7 +8,7 @@ import { Selector } from "./selector";
 import { Button } from "./button";
 import { Modal } from "./modal";
 
-export const BankCard = ({ name, date, cvv, type, brand, cardNumber }) => {
+export const CreditCard = ({ name, date, cvv, type, brand, cardNumber }) => {
   const brandIcons = {
     Visa: RiVisaLine,
     MasterCard: SiMastercard,

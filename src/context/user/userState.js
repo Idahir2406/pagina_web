@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import UserContext from "./userContext";
 import { useSession } from "next-auth/react";
 import { useLogContext } from "../../hooks/useIsLoggedIn";
+import useSWR from "swr"
+
+
 const UserState = ({ children }) => {
   const [Loading, setLoading] = useState(true);
-  const { isLogged,logout } = useLogContext();
-
+  const { isLogged } = useLogContext();
   const [user, setUser] = useState({});
   const { data: session } = useSession();
-
+  // const { data, error, isLoading } = useSWR(`/api/user/${session?.user?.email}`, fetcher);
+  // console.log(data, error, isLoading);
   useEffect(() => {
     getUser();
   }, [isLogged]);
@@ -36,6 +39,13 @@ const UserState = ({ children }) => {
     setUser(null);
   };
 
+  const updateUser = (data) => {
+    setUser({
+      ...user,
+      ...data,
+    });
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -43,6 +53,7 @@ const UserState = ({ children }) => {
         getUser,
         deleteUser,
         Loading,
+        updateUser
       }}
     >
       {children}

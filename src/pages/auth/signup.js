@@ -88,7 +88,7 @@ export default function Signup() {
   return (
     <FormContainer>
       <Form onSubmit={handleSubmit} cl>
-        <p>¡Vamos a empezar!</p>
+        <h3 className="text-2xl">¡Vamos a empezar!</h3>
 
         <Input
           label="Nombre de usuario"

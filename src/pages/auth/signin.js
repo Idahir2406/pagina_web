@@ -5,7 +5,6 @@ import Link from "next/link";
 import { AiOutlineLock, AiOutlineMail } from "react-icons/ai";
 import { Input, Button, Spinner } from "@nextui-org/react";
 import { useUser } from "hooks/useUser";
-
 export default function Signin() {
   const { getUser } = useUser();
   
@@ -57,6 +56,7 @@ export default function Signin() {
     const errores = validate();
     if (Object.keys(errores).length) return setErrors(errores);
     setLoading(true);
+    const signIn = await import("next-auth/react").then((mod) => mod.signIn);
     try {
       const res = await signIn("credentials", {
         email: email,
@@ -87,7 +87,7 @@ export default function Signin() {
         className="rounded-md p-5 flex flex-col gap-3 justify-center bg-gray-50  dark:bg-slate-800 w-96"
         onSubmit={handleSubmit}
       >
-        <p className="text-2xl ">Bienvenido de nuevo :)</p>
+        <h3 className="text-2xl ">Bienvenido de nuevo :)</h3>
         <div className="flex flex-col">
           <div className="flex flex-col gap-4">
             <Input

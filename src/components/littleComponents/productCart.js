@@ -52,7 +52,7 @@ export default function ProductCart({
       </div>
       
       <div className="col-span-1 md:col-span-1 text-end">
-        <IconButton type="button" onPress={() => deleteProduct(product._id)}>
+        <IconButton type="button" onClick={() => deleteProduct(product._id)}>
           <IoMdClose className="cursor-pointer" size={20} />
         </IconButton>
       </div>
