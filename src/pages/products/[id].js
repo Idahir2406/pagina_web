@@ -31,16 +31,17 @@ export default function ProductDetails({ product, error }) {
     if (!isLogged) return push(`/auth/login?redirect=${router.asPath}`);
 
     if (quantity === 0) return setAdvice("Debes seleccionar una cantidad");
+    console.log(data);
     const sendProducto = {
-      _id: product._id,
-      name: product.name,
-      category: product.category,
-      price: product.price,
-      description: product.description,
-      image: product.image,
+      _id: data._id,
+      name: data.name,
+      category: data.category,
+      price: data.price,
+      description: data.description,
+      image: data.image,
       quantity,
     };
-    const res = await fetch(`/api/user/products/${user.email}/${product._id}`, {
+    const res = await fetch(`/api/user/products/${user.email}/${data._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +51,6 @@ export default function ProductDetails({ product, error }) {
     if (res.status === 200) {
       const data = await res.json();
       setAdvice(data.msg);
-      handleAdvice();
     }
   };
 
