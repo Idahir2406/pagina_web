@@ -1,6 +1,5 @@
-import { Image } from "@nextui-org/react";
 import Link from "next/link";
-import NextImage from "next/image";
+import Image from "next/image";
 
 function ProductCard({ href, image, name, price, altName }) {
   return (
@@ -9,13 +8,11 @@ function ProductCard({ href, image, name, price, altName }) {
         <div className="overflow-hidden rounded-t-md hover:opacity-80 transition">
           <Image
             priority
-            as={NextImage}
             width={300}
             height={300}
             src={image}
             alt={altName}
             radius="none"
-            isZoomed
             className="object-cover"
           />
         </div>

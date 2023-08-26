@@ -92,16 +92,27 @@ export default function Addresses() {
         <h1 className="text-xl px-2 font-md">Direcciones</h1>
       </div>
 
-      <section className="grid grid-cols-12 border-y dark:border-gray-500 py-4 px-2 mb-4">
-        <span className="col-span-4">Calle</span>
-        <span className="col-span-2">Provincia</span>
-        <span className="col-span-2">Ciudad</span>
-        <span className="col-span-3">Referencia</span>
+      <article className="grid grid-cols-12 border-y dark:border-gray-500 py-4 px-2 mb-4">
+        <span key="Street" className="col-span-4">
+          Calle
+        </span>
+        <span key="State" className="col-span-2">
+          Provincia
+        </span>
+        <span key="City" className="col-span-2">
+          Ciudad
+        </span>
+        <span key="Reference" className="col-span-3">
+          Referencia
+        </span>
         <span className="col-span-1"></span>
-      </section>
+      </article>
       {user.adresses &&
         user.adresses.map(({ _id, street, state, city, reference }) => (
-          <section key={_id} className="grid grid-cols-12 py-1 px-2 items-center">
+          <section
+            key={_id}
+            className="grid grid-cols-12 py-1 px-2 items-center"
+          >
             <span className="col-span-4">{street}</span>
             <span className="col-span-2">{state}</span>
             <span className="col-span-2">{city}</span>
@@ -116,111 +127,44 @@ export default function Addresses() {
           </section>
         ))}
       {isEditing && (
-        <section className="grid grid-cols-12 border-t dark:border-gray-500 py-4  gap-2">
-        <Input
-          className="col-span-4"
-          validationState={errors.street ? "invalid" : "valid"}
-          errorMessage={errors.street}
-          name="street"
-          onChange={handleChange}
-          label="Calle"
-        />
+        <article className="grid grid-cols-12 border-t dark:border-gray-500 py-4  gap-2">
+          <Input
+            className="col-span-4"
+            validationState={errors.street ? "invalid" : "valid"}
+            errorMessage={errors.street}
+            name="street"
+            onChange={handleChange}
+            label="Calle"
+          />
 
-        <Input
-          className="col-span-2"
-          validationState={errors.state ? "invalid" : "valid"}
-          errorMessage={errors.state}
-          name="state"
-          onChange={handleChange}
-          label="Provincia"
-        />
+          <Input
+            className="col-span-2"
+            validationState={errors.state ? "invalid" : "valid"}
+            errorMessage={errors.state}
+            name="state"
+            onChange={handleChange}
+            label="Provincia"
+          />
 
-        <Input
-          className="col-span-2"
-          validationState={errors.city ? "invalid" : "valid"}
-          errorMessage={errors.city}
-          name="city"
-          onChange={handleChange}
-          label="Ciudad"
-        />
+          <Input
+            className="col-span-2"
+            validationState={errors.city ? "invalid" : "valid"}
+            errorMessage={errors.city}
+            name="city"
+            onChange={handleChange}
+            label="Ciudad"
+          />
 
-        <Input
-          className="col-span-4"
-          validationState={errors.reference ? "invalid" : "valid"}
-          errorMessage={errors.reference}
-          name="reference"
-          onChange={handleChange}
-          label="Referencia"
-        />
-
-      </section>
+          <Input
+            className="col-span-4"
+            validationState={errors.reference ? "invalid" : "valid"}
+            errorMessage={errors.reference}
+            name="reference"
+            onChange={handleChange}
+            label="Referencia"
+          />
+        </article>
       )}
-      {/* <table className="table-auto w-full">
-        <thead>
-          <tr className="border-y">
-            <TableRow>Calle</TableRow>
-            <TableRow>Provincia</TableRow>
-            <TableRow>Ciudad</TableRow>
-            <TableRow>Referencia </TableRow>
-          </tr>
-        </thead>
-        <tbody>
-          {user.adresses &&
-            user.adresses.map((adress, index) => (
-              <tr key={index}>
-                <TableRow>{adress.street}</TableRow>
-                <TableRow>{adress.state}</TableRow>
-                <TableRow>{adress.city}</TableRow>
-                <TableRow>{adress.reference}</TableRow>
-                <TableRow>
-                  <button onClick={()=>handleDelete(adress._id)} className="hover:bg-gray-200 hover:dark:bg-slate-500 flex items-center justify-center rounded-full h-10 w-10 transition-colors text-default-600">
-                    <AiOutlineDelete size={25} />
-                  </button>
-                </TableRow>
-              </tr>
-            ))}
-          {isEditing && (
-            <tr className="">
-              <TableRow>
-                <Input
-                  validationState={errors.street ? "invalid" : "valid"}
-                  errorMessage={errors.street}
-                  name="street"
-                  onChange={handleChange}
-                  label="Calle"
-                />
-              </TableRow>
-              <TableRow>
-                <Input
-                  validationState={errors.state ? "invalid" : "valid"}
-                  errorMessage={errors.state}
-                  name="state"
-                  onChange={handleChange}
-                  label="Provincia"
-                />
-              </TableRow>
-              <TableRow>
-                <Input
-                  validationState={errors.city ? "invalid" : "valid"}
-                  errorMessage={errors.city}
-                  name="city"
-                  onChange={handleChange}
-                  label="Ciudad"
-                />
-              </TableRow>
-              <TableRow>
-                <Input
-                  validationState={errors.reference ? "invalid" : "valid"}
-                  errorMessage={errors.reference}
-                  name="reference"
-                  onChange={handleChange}
-                  label="Referencia"
-                />
-              </TableRow>
-            </tr>
-          )}
-        </tbody>
-      </table> */}
       <Button
         onClick={() => {
           if (isEditing) {

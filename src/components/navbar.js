@@ -4,10 +4,9 @@ import { Searchbox } from "./searchbox";
 import { NavLink } from "./littleComponents/navLink";
 import dynamic from "next/dynamic";
 import { useUser } from "../hooks/useUser";
-import { Button, DropdownItem } from "@nextui-org/react";
+import { DropdownItem } from "@nextui-org/react";
 import ThemeSwitch from "./littleComponents/ThemeSwitch";
 import { useLogContext } from "../hooks/useIsLoggedIn";
-import Link from "next/link";
 import { authOptions,profileOptions  } from "../services/constants";
 const AuthDropdown = dynamic(() =>
   import("./dropdowns/dropdownParts/dropdown")
@@ -16,16 +15,17 @@ const DynamicLink = dynamic(() => import("next/link"));
 const Dropdown = dynamic(
   import("./dropdowns/ProfileDropdown").then((mod) => mod.ProfileDropdown)
 );
-
+import { useRouter } from "next/router";
 
 
 export default function Navbar() {
   const { user, deleteUser, Loading } = useUser();
   const { isLogged, logout } = useLogContext();
-
+  const router = useRouter();
   const handleLogout = async () => {
     const signOut = await import("next-auth/react").then((mod) => mod.signOut);
     signOut({ redirect: false });
+    router.push("/");
     logout();
     deleteUser();
   };

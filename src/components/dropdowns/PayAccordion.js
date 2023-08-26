@@ -1,5 +1,4 @@
 import { Accordion } from "./Accordion";
-
 import { RadioGroup, Radio } from "@nextui-org/react";
 import Link from "next/link";
 export const PayAccordion = ({

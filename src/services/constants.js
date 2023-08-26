@@ -1,6 +1,7 @@
 
 export const Admin = "admin";
 export const User = "user";
+export const CurrentDate = new Date().toISOString().slice(0, 10);
 
 export const authOptions = [
   {

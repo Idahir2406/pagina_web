@@ -13,6 +13,7 @@
     "@nextui-org/react": "^2.0.19",
     "bcrypt": "^5.1.1",
     "credentials": "^3.0.2",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "email-validator": "^2.0.4",
     "eslint": "8.28.0",

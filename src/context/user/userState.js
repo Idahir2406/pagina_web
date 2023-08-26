@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 import UserContext from "./userContext";
 import { useSession } from "next-auth/react";
 import { useLogContext } from "../../hooks/useIsLoggedIn";
-import useSWR from "swr"
-
+import useSWR from "swr";
 
 const UserState = ({ children }) => {
   const [Loading, setLoading] = useState(true);
   const { isLogged } = useLogContext();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    email: "",
+    name: "",
+    addresses: [],
+    paymentMethods: [],
+    orders: [],
+    wishList: [],
+  });
   const { data: session } = useSession();
   // const { data, error, isLoading } = useSWR(`/api/user/${session?.user?.email}`, fetcher);
   // console.log(data, error, isLoading);
@@ -19,9 +25,7 @@ const UserState = ({ children }) => {
   const getUser = async () => {
     if (!session) return;
     try {
-      const res = await fetch(
-        `/api/user/${session.user.email}`
-      );
+      const res = await fetch(`/api/user/${session.user.email}`);
       const data = await res.json();
       setUser({
         ...user,
@@ -36,7 +40,14 @@ const UserState = ({ children }) => {
   };
 
   const deleteUser = () => {
-    setUser(null);
+    setUser({
+      email: "",
+      name: "",
+      addresses: [],
+      paymentMethods: [],
+      orders: [],
+      wishList: [],
+    });
   };
 
   const updateUser = (data) => {
@@ -44,7 +55,7 @@ const UserState = ({ children }) => {
       ...user,
       ...data,
     });
-  }
+  };
 
   return (
     <UserContext.Provider
@@ -53,7 +64,7 @@ const UserState = ({ children }) => {
         getUser,
         deleteUser,
         Loading,
-        updateUser
+        updateUser,
       }}
     >
       {children}

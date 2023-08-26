@@ -3,35 +3,29 @@ import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import Incrementador from "../../components/littleComponents/incrementador";
 import { useRouter } from "next/router";
-import { Button, Image } from "@nextui-org/react";
+import { Button, Image, Input } from "@nextui-org/react";
 import NextImage from "next/image";
 import Popover from "components/buttons/Popover";
 import useSWR from "swr";
 import { useLogContext } from "../../hooks/useIsLoggedIn";
 import { useUser } from "hooks/useUser";
 import fetcher from "../../services/fetcher";
-export default function ProductDetails({ product, error }) {
+export default function ProductDetails() {
   const { isLogged } = useLogContext();
   const { push } = useRouter();
-  const { user, Loading, getUser } = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const { data, isLoading } = useSWR(`/api/${router.asPath}`, fetcher);
   const [quantity, setQuantity] = useState(1);
   const [wish, setWish] = useState(false);
   const [advice, setAdvice] = useState("");
-  if (error && error.statusCode) {
-    return (
-      <h1>
-        {error.statustext}, {error.statusCode}
-      </h1>
-    );
-  }
+
 
   const handleAddCart = async () => {
-    if (!isLogged) return push(`/auth/login?redirect=${router.asPath}`);
+    if (!isLogged) return push(`/auth/signin?redirect=${router.asPath}`);
 
     if (quantity === 0) return setAdvice("Debes seleccionar una cantidad");
-    console.log(data);
+ 
     const sendProducto = {
       _id: data._id,
       name: data.name,
@@ -88,10 +82,11 @@ export default function ProductDetails({ product, error }) {
               height={300}
             />
           </div>
-          <div className="flex flex-col mt-3 justify-self-center md:justify-self-auto">
+          <div className="flex flex-col mt-3 justify-self-center md:justify-self-auto gap-4">
             <h3 className="text-2xl">{data.name}</h3>
             <p className="text-lg">${data.price}</p>
             <p>{data.description}</p>
+
             <Incrementador onChange={(e) => setQuantity(e.target.value)} />
             <div className=" flex gap-4">
               <Popover message={advice} onPress={handleAddCart}>
@@ -118,27 +113,3 @@ export default function ProductDetails({ product, error }) {
     </div>
   );
 }
-
-// export async function getServerSideProps({ query: { id } }) {
-//   try {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`);
-//     if (res.status === 200) {
-//       const product = await res.json();
-//       return {
-//         props: {
-//           product,
-//         },
-//       };
-//     }
-//     return {
-//       props: {
-//         error: {
-//           statusCode: res.status,
-//           statustext: "Invalid ID",
-//         },
-//       },
-//     };
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }

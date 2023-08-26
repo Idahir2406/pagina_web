@@ -2,7 +2,7 @@ import User from "models/user";
 import { Types } from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
-import { v4 } from "uuid";
+
 export default async function AddressHandler(req, res) {
   const session = await getServerSession(req, res, authOptions);
   const { email } = req.query;
@@ -18,6 +18,7 @@ export default async function AddressHandler(req, res) {
     case "POST":
       try {
         const address = req.body;
+        
         if (
           !address ||
           !address.street ||
@@ -26,10 +27,9 @@ export default async function AddressHandler(req, res) {
           !address.reference
         )
           return res.status(400).json("Los campos son requeridos");
-        const newAdress = { _id: v4(),...address  };
         const user = await User.findOneAndUpdate(
           { email: email },
-          { $push: { adresses: newAdress } },
+          { $push: { adresses: address } },
           { new: true }
         ).select("adresses");
         return res.status(200).json(user);
