@@ -159,27 +159,27 @@ export const Chat = () => {
                     message.role === "assistant" ? (
                       <div
                         key={index}
-                        className=" bg-gray-100 text-start px-2 py-4 max-w-md text-default-300 grid grid-cols-8"
+                        className=" bg-gray-100 text-start px-2 py-4 max-w-md text-default-300 grid grid-cols-12 "
                       >
-                        <div className="col-span-1">
+                        <div className="col-span-2">
                           <IconButton>
                             <MdOutlineAssistant size={25} />
                           </IconButton>
                         </div>
-                        <p className="col-span-7">{message.content}</p>
+                        <p className="col-span-10 ">{message.content}</p>
                       </div>
 
                       
                     ) : (
                       <div
                         key={index}
-                        className=" bg-gray-200 text-start px-2 py-4 max-w-md text-black grid grid-cols-8"
+                        className=" bg-gray-200 text-start px-2 py-4 max-w-md text-black grid grid-cols-12"
                       >
-                        <div className="col-span-1">
+                        <div className="col-span-2">
                           <Avatar src={user.image} />
                         </div>
 
-                        <p className="col-span-7">{message.content}</p>
+                        <p className="col-span-10 ">{message.content}</p>
                       </div>
                     )
                   )}
@@ -188,26 +188,26 @@ export const Chat = () => {
                     message.role === "assistant" ? (
                       <div
                         key={index}
-                        className=" bg-gray-100 text-start px-2 py-4 max-w-md text-black grid grid-cols-8"
+                        className=" bg-gray-100 text-start px-2 py-4 max-w-md text-default-300 grid grid-cols-12 "
                       >
-                        <div className="col-span-1">
+                        <div className="col-span-2">
                           <IconButton>
                             <MdOutlineAssistant size={25} />
                           </IconButton>
                         </div>
-                        <p className="col-span-7">{message.content}</p>
+                        <p className="col-span-10">{message.content}</p>
                       </div>
                     ) : (
                       <div
-                        key={index}
-                        className=" bg-gray-300 text-start px-2 py-4 max-w-md text-black grid grid-cols-8"
-                      >
-                        <div className="col-span-1">
-                          <Avatar src={user.image} />
-                        </div>
-
-                        <p className="col-span-7">{message.content}</p>
+                      key={index}
+                      className=" bg-gray-200 text-start px-2 py-4 max-w-md text-black grid grid-cols-12"
+                    >
+                      <div className="col-span-2 ">
+                        <Avatar src={user.image} />
                       </div>
+
+                      <p className="col-span-10">{message.content}</p>
+                    </div>
                     )
                   )}
                 </div>
