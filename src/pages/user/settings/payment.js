@@ -138,8 +138,7 @@ export default function Payment() {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <h3 className="text-xl font-medium">Métodos de Pago</h3>
+
       <div className="grid md:grid-cols-2 gap-10">
         <form
           onSubmit={handleSubmit}
@@ -198,7 +197,7 @@ export default function Payment() {
           <MethodArccordion user={user} />
         </div>
       </div>
-    </div>
+
   );
 }
 

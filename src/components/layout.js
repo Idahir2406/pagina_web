@@ -1,5 +1,5 @@
 import Navbar from "./navbar";
-
+import { Chat } from "components/Chat"
 export const Layout = ({ children, session }) => {
   return (
     <>
@@ -10,7 +10,8 @@ export const Layout = ({ children, session }) => {
       >
         {children}
       </div>
-      {/* <Chat /> */}
+
+      <Chat />
     </>
   );
 };
