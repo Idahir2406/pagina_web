@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 
-import { BsChatDots } from "react-icons/bs";
+import { BsChatDots,BsChatSquare } from "react-icons/bs";
 import { useChat } from "ai/react";
 import { useUser } from "hooks/useUser";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineAssistant } from "react-icons/md";
+
 import {
   Modal,
   ModalContent,
@@ -13,7 +14,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Textarea,
+  Input,
   Avatar,
 } from "@nextui-org/react";
 import { IconButton } from "./buttons/IconButton";
@@ -59,7 +60,7 @@ export const Chat = () => {
     if (!Loading) {
       getChats();
     }
-  }, [Loading, loadChat]);
+  }, [Loading]);
 
   const scrollToBottom = () => {
     const moveToBottom = setInterval(() => {
@@ -150,11 +151,9 @@ export const Chat = () => {
                     Habla con nuestro asistente inteligente para resolver
                     cualquier duda que tengas.
                   </p>
- 
-
                 <div
                   ref={chatContainerRef}
-                  className="w-full rounded-lg flex flex-col max-h-96 overflow-auto"
+                  className="w-full rounded-lg flex flex-col max-h-96 overflow-auto bg-white"
                 >
                   {chat.map((message, index) =>
                     message.role === "assistant" ? (
@@ -218,8 +217,9 @@ export const Chat = () => {
                 as="form"
                 className="flex items-center justify-center "
               >
-                <Textarea
-                  placeholder="Escribe tu pregunta aquí..."
+                <Input
+                  
+                  label="Escribe tu pregunta aquí..."
                   onChange={handleChange}
                   value={input}
                 />
