@@ -43,7 +43,7 @@ export const Chat = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/Chat/insertChats?email=${user.email}`
+        `/api/Chat/insertChats?email=${user.email}`
       );
       const data = await res.json();
 
@@ -97,7 +97,7 @@ export const Chat = () => {
   };
 
   const sendMessage = async (message) => {
-    await fetch("http://localhost:3000/api/Chat/insertChats", {
+    await fetch("/api/Chat/insertChats", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +111,7 @@ export const Chat = () => {
 
   const handleDelete = async () => {
     await fetch(
-      `http://localhost:3000/api/Chat/insertChats?email=${user.email}`,
+      `/api/Chat/insertChats?email=${user.email}`,
       {
         method: "DELETE",
         headers: {
