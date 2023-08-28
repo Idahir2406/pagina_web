@@ -159,7 +159,7 @@ export const Chat = () => {
                     message.role === "assistant" ? (
                       <div
                         key={index}
-                        className=" bg-gray-100 text-start px-2 py-4 max-w-md text-default-300 grid grid-cols-12 "
+                        className="text-default-500 dark:text-default-300 bg-gray-100 px-2 py-4 max-w-md  grid grid-cols-12 "
                       >
                         <div className="col-span-2">
                           <IconButton>
@@ -173,7 +173,7 @@ export const Chat = () => {
                     ) : (
                       <div
                         key={index}
-                        className=" bg-gray-200 text-start px-2 py-4 max-w-md text-black grid grid-cols-12"
+                        className="text-black bg-gray-200 px-2 py-4 max-w-md grid grid-cols-12"
                       >
                         <div className="col-span-2">
                           <Avatar src={user.image} />
@@ -188,7 +188,7 @@ export const Chat = () => {
                     message.role === "assistant" ? (
                       <div
                         key={index}
-                        className=" bg-gray-100 text-start px-2 py-4 max-w-md text-default-300 grid grid-cols-12 "
+                        className=" bg-gray-100 text-start px-2 py-4 max-w-md grid grid-cols-12 "
                       >
                         <div className="col-span-2">
                           <IconButton>
@@ -200,7 +200,7 @@ export const Chat = () => {
                     ) : (
                       <div
                       key={index}
-                      className=" bg-gray-200 text-start px-2 py-4 max-w-md text-black grid grid-cols-12"
+                      className=" bg-gray-200 text-start px-2 py-4 max-w-md grid grid-cols-12"
                     >
                       <div className="col-span-2 ">
                         <Avatar src={user.image} />
