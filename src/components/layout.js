@@ -1,6 +1,8 @@
 import Navbar from "./navbar";
 import { Chat } from "components/Chat"
+import { useLogContext } from "hooks/useIsLoggedIn";
 export const Layout = ({ children, session }) => {
+  const { isLogged } = useLogContext();
   return (
     <>
       <Navbar session={session} />
@@ -10,8 +12,9 @@ export const Layout = ({ children, session }) => {
       >
         {children}
       </div>
-
-      <Chat />
+      {
+        isLogged && <Chat />
+      }
     </>
   );
 };
