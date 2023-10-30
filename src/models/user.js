@@ -1,6 +1,6 @@
 import {Schema,model,models} from 'mongoose';
-
-const adressSchema=new Schema({
+import { orderSchema } from './order';
+export const adressSchema=new Schema({
   street:{
     type: String,
     required: true,
@@ -52,7 +52,7 @@ const UserSchema=new Schema({
   },
   orders:{
     default: [],
-    type: Array,
+    type: [orderSchema],
   },
   adresses:{
     default: [],

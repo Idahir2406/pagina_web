@@ -1,6 +1,8 @@
 import { Order } from "../../components/products/Order";
 import { Summary } from "../../components/products/Summary";
 import { useUser } from "hooks/useUser";
+import { Link } from "@nextui-org/react"
+import { AiOutlineWhatsApp } from "react-icons/ai";
 export default function Orders() {
   const { user, Loading } = useUser();
   return (
@@ -19,8 +21,18 @@ export default function Orders() {
                   <div className="col-span-2">
                     <h2>Información de pago</h2>
                     <div className="text-default-500 text-sm">
-                      <p>{orderData.paymentMethod.name}</p>
-                      <p>{orderData.paymentMethod.type}</p>
+                      <p>Transferencia</p>
+                      <Link
+                        href={`https://wa.me/593986501698?text=Hola,%20soy%20${
+                          user.username
+                        }%20y%20estoy%20interesad@%20en%20los%20productos%20que%20están%20en%20la%20siguiente%20orden:%20*${orderData._id}*%20que%20cuenta%20con%20${orderData.order.length}%20${orderData.order.length ===1 ? `producto` : `productos`}%20y%20un%20total%20de%20${orderData.total}$`}
+                        target="_blank"
+                      >
+                        Coordinar por Whatsapp
+                        <AiOutlineWhatsApp size={25} />
+                      </Link>
+                      {/* <p>{orderData.paymentMethod.name}</p>
+                      <p>{orderData.paymentMethod.type}</p> */}
                     </div>
                   </div>
                   <Summary
