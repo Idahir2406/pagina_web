@@ -8,19 +8,21 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Inter } from "next/font/google";
 import { LogProvider } from "../context/logContext";
 import NextNProgress from "nextjs-progressbar";
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/router";
+const inter = Inter({ subsets: ["latin"],weights: [400, 500, 600, 700] });
 function MyApp({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
+  const router = useRouter();
   return (
     <>
-      <NextNProgress  color="#8b5cf6" options={{
+      <NextNProgress  color="#000" options={{
           showSpinner: false,
         }}/>
       <SessionProvider session={pageProps.session}>
         <LogProvider>
           <UserState>
             <SearchProvider>
-              <NextUIProvider>
+              <NextUIProvider navigate={router.push}>
                 <ThemeProvider enableSystem={true} attribute="class">
                   <Layout session={pageProps.session}>
                     {getLayout(

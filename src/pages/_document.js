@@ -10,10 +10,11 @@ export default function Document() {
         />
 
       </Head>
-      <body className="dark:bg-gray-700 min-h-screen bg-gray-100">
+      <body className="dark:bg-gray-700 min-h-screen bg-[#e5e5e5]">
         <Main />
         <NextScript />
       </body>
+      
     </Html>
   );
 }

@@ -1,31 +1,34 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Card,CardHeader,CardFooter,Image as NextImage } from "@nextui-org/react";
 
 function ProductCard({ href, image, name, price, altName }) {
   return (
-    <Link className="flex" href={href}>
-      <div className="rounded-md border bg-white dark:bg-slate-800 dark:border-none ">
-        <div className="overflow-hidden rounded-t-md hover:opacity-80 transition">
-          <Image
+    <Link href={href}>
+      <Card >
+        <CardHeader >
+          <NextImage
+            as={Image}
             priority
             width={300}
             height={300}
             src={image}
             alt={altName}
-            radius="none"
+            isBlurred
+            isZoomed
             className="object-cover"
           />
-        </div>
+        </CardHeader>
 
-        <div className="pb-2 px-2">
-          <h3 className="mt-4 text-medium dark:text-gray-200 text-gray-700">
+        <CardFooter className="flex flex-col justify-start items-start">
+          <h3 className="text-sm dark:text-gray-200 text-gray-700">
             {name}
           </h3>
-          <p className="mt-1 text-medium font-medium text-default-600 dark:text-gray-200">
+          <p className="text-medium font-medium text-default-500 dark:text-gray-300">
             ${price}
           </p>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     </Link>
     // <div onClick={onClick} className={styles.product_card}>
     //   <div className={styles.imageContainer}>

@@ -34,7 +34,7 @@ export default function Popover({
         <Button
           {...rest}
           type={type}
-          className={`bg-violet-500 text-white ${className}`}
+          className={` ${className}`}
           onPress={onPress}
         >
           {children}

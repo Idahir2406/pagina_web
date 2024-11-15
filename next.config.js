@@ -9,13 +9,44 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: [
-      "www.nasa.gov",
-      "th.bing.com",
-      "www.lovelycraft.com",
-      "i.pinimg.com",
-      "lh3.googleusercontent.com",
-      "firebasestorage.googleapis.com",
+    
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.nasa.gov',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.lovelycraft.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'th.bing.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   env: {

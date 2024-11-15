@@ -1,5 +1,6 @@
+import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
-
+import { HiMinusSm, HiOutlinePlusSm } from "react-icons/hi";
 export default function Incrementador({ onChange }) {
   const [value, setValue] = useState(1);
 
@@ -16,21 +17,23 @@ export default function Incrementador({ onChange }) {
   };
 
   return (
-    <div className="flex  mb-4 h-12 w-1/4 justify-between items-center p-4 border rounded-md">
-      <p className="cursor-pointer select-none" onClick={decrement}>
-        -
-      </p>
-      <input
-        className="w-6 text-lg text-center outline-none bg-transparent"
+    <div className="flex gap-2">
+      <Button isIconOnly onPress={decrement}>
+        <HiMinusSm size={18} />
+      </Button>
+      <Input
+        variant="faded"
+        className="w-16"
         onChange={onChange}
         type="number"
         value={value}
         min="1"
         max="10" // Establecemos el límite máximo a 10
       />
-      <p className="cursor-pointer select-none" onClick={increment}>
-        +
-      </p>
+
+      <Button isIconOnly onPress={increment}>
+        <HiOutlinePlusSm size={18} />
+      </Button>
     </div>
   );
 }

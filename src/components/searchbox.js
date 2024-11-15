@@ -2,7 +2,7 @@ import { Fragment,useContext,useState,Suspense,lazy } from "react";
 import { SearchContext } from "../context/searchContext";
 import { Listbox } from "@headlessui/react";
 import { BsChevronCompactDown } from "react-icons/bs";
-
+import { categories } from "../context/types";
 export const Searchbox = () => {
   const { setSearchTerm } = useContext(SearchContext);
   const [isFocused, setIsFocused] = useState(false);
@@ -15,19 +15,7 @@ export const Searchbox = () => {
     setIsFocused(false);
   };
 
-  const categories = [
-    { id: 1, name: "Todos", link: "/products" },
-    { id: 2, name: "Regalos", link: "/products?category=regalos" },
-    { id: 3, name: "Decoración", link: "/products?category=decoracion" },
-    { id: 4, name: "Árboles", link: "/products?category=arboles" },
-    { id: 5, name: "Luces", link: "/products?category=luces" },
-    { id: 6, name: "Adornos", link: "/products?category=adornos" },
-    { id: 7, name: "Envolturas", link: "/products?category=envolturas" },
-    { id: 8, name: "Accesorios", link: "/products?category=accesorios" },
-    { id: 9, name: "Ropa", link: "/products?category=ropa" },
-    { id: 10, name: "Calzado", link: "/products?category=calzado" },
-  ];
-  
+
   const [selectedCategorie, setSelectedCategorie] = useState(categories[0]);
 
   const handleChange = (e) => {

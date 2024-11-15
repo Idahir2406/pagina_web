@@ -13,7 +13,7 @@ export default function ThemeSwitch() {
   };
 
   return (
-    <Button isIconOnly className="bg-transparent hover:ring-1" onPress={toggleDarkMode}>
+    <Button isIconOnly variant="light"  onPress={toggleDarkMode}>
       {currentTheme === "dark" ? (
           <BsMoonFill size={20} className="text-yellow-400" />
           

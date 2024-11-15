@@ -6,11 +6,14 @@ import {
   Button,
 } from "@nextui-org/react";
 import Link from "next/link";
+import { HiOutlineUser } from "react-icons/hi2";
 const Dropdown = ({ options, children }) => {
   return (
     <Drp placement="bottom-end">
       <DropdownTrigger>
-        <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">{children}</Button>
+        <Button startContent={
+          <HiOutlineUser />
+        } className="bg-black text-white">{children}</Button>
       </DropdownTrigger>
       <DropdownMenu aria-label="Auth Actions">
         {options.map((option, index) => (
