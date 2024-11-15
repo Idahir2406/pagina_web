@@ -7,6 +7,8 @@ import {
   Accordion,
   AccordionItem,
   Button,
+  Card,
+  CardBody,
   Image,
   Input,
   Tooltip,
@@ -114,12 +116,18 @@ export default function ProductDetails({ data }) {
         <picture className="">
           <Image
             removeWrapper
+            as={NextImage}
+            width={500}
+            height={500}
+            isBlurred
             alt="productImage"
             className="w-full h-full object-center object-cover"
             src={data.image}
           />
         </picture>
-        <div className="flex flex-col  gap-3 w-[80%]">
+        <Card>
+          <CardBody>
+          <div className="flex flex-col  gap-3 p-4">
           <div className="flex justify-between items-center">
             <h3 className="text-2xl font-semibold">{data.name}</h3>
             <Tooltip
@@ -209,6 +217,8 @@ export default function ProductDetails({ data }) {
             </Accordion>
           </div>
         </div>
+          </CardBody>
+        </Card>
       </div>
     </>
   );

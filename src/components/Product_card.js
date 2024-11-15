@@ -21,10 +21,10 @@ function ProductCard({ href, image, name, price, altName }) {
         </CardHeader>
 
         <CardFooter className="flex flex-col justify-start items-start">
-          <h3 className="text-sm dark:text-gray-200 text-gray-700">
+          <h3 className="text-sm dark:text-gray-200  text-default-500">
             {name}
           </h3>
-          <p className="text-medium font-medium text-default-500 dark:text-gray-300">
+          <p className="text-medium font-semibold text-default-700  ">
             ${price}
           </p>
         </CardFooter>
