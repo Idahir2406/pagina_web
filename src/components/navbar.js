@@ -39,6 +39,7 @@ export default function Nav() {
     deleteUser();
   };
 
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
@@ -98,7 +99,7 @@ export default function Nav() {
         ></NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem 
+          <NavbarItem
             isActive={
               router.pathname === "/user/cart" ||
               router.pathname === "/user/cart/[id]"
@@ -111,9 +112,7 @@ export default function Nav() {
               Carrito
             </DynamicLink>
           </NavbarItem>
-          <NavbarItem 
-            isActive={router.pathname === "/user/orders"}
-            >
+          <NavbarItem isActive={router.pathname === "/user/orders"}>
             <DynamicLink
               className="hidden md:block dark:text-white dark:hover:text-gray-200"
               href="/user/orders"
@@ -132,11 +131,31 @@ export default function Nav() {
         </NavbarContent>
 
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex gap-2">
-            <ThemeSwitch />
-            <AuthDropdown options={authOptions}>Comienza ahora</AuthDropdown>
-          </NavbarItem>
-          <NavbarItem></NavbarItem>
+          {!isLogged ? (
+            <NavbarItem className="hidden lg:flex gap-2">
+              <ThemeSwitch />
+              <AuthDropdown options={authOptions}>Comienza ahora</AuthDropdown>
+            </NavbarItem>
+          ) : (
+            <NavbarItem>
+              <Dropdown
+                src={!Loading && user && user.avatar}
+                username={!Loading && user && user.username}
+                options={profileOptions}
+                role={!Loading && user && user.role}
+              >
+                <DropdownItem
+                  color="danger"
+                  className="text-danger"
+                  startContent={<HiOutlineLogout size={18} />}
+                  key="logout"
+                  onPress={handleLogout}
+                >
+                  Cerrar Sesión
+                </DropdownItem>
+              </Dropdown>
+            </NavbarItem>
+          )}
         </NavbarContent>
 
         <NavbarMenu>

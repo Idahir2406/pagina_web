@@ -28,7 +28,7 @@ export const authOptions = {
             credentials.password.length < 8
           )
             return null;
-            
+          console.log(credentials);
           const user = await User.findOne({ email: credentials.email }).select(
             "username email image role password"
           );
@@ -61,7 +61,6 @@ export const authOptions = {
     async signIn(user) {
       // Custom logic to handle user sign-in
       if (user.account.provider === "credentials") return true;
-
       // Check if the user already exists in your database
       const existingUser = await User.findOne({ email: user.user.email });
       if (existingUser) {
@@ -88,7 +87,6 @@ export const authOptions = {
     },
     async jwt({ token, user,    }) {
       if (user) token.user = user;
-
       const userFinded = await User.findOne({ email: token.email }).select(
         "username email image role"
       );
