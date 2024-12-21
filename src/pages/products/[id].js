@@ -226,7 +226,7 @@ export default function ProductDetails({ data }) {
 
 export async function getServerSideProps({ params }) {
   const { id } = params;
-  const res = await fetch(`http://localhost:3000/api/products/${id}`);
+  const res = await fetch(`${NEXT_PUBLIC_API_URL}/api/products/${id}`);
   const data = await res.json();
   return {
     props: { data },
